@@ -1,0 +1,4 @@
+建立一个3D建筑物爆炸模拟，参考 blastFoam_building3D 案例
+
+
+缺少了 Allrun 文件

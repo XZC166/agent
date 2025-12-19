@@ -1,0 +1,69 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox             |
+|  \\    /   O peration     | Website:  https://openfoam.org                   |
+|   \\  /    A nd           | Version:  dev                                    |
+|    \\/     M anipulation  |                                                 |
+\\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      phaseProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+phases (C4 Air);
+
+C4
+{
+    transportModel  Newtonian;
+    equationOfState
+    {
+        type    JWL;
+        omega   0.30;
+        rho0    1630;  // Density [kg/m^3]
+        A       3.712e8; // Pa
+        B       3.231e7; // Pa
+        R1      4.15;
+        R2      0.95;
+        T1      0.5;
+        T2      0.3;
+    }
+    thermo
+    {
+        type    const;
+        Cp      1830.0;  // Specific heat [J/(kg·K)]
+        Hf      0;       // Heat of formation [J/kg]
+        eta     0;       // Viscosity [Pa·s]
+        Pr      1;       // Prandtl number
+    }
+    velocityExponent 0;
+    emissivity        0;
+    absorptivity      0;
+}
+
+Air
+{
+    transportModel  Newtonian;
+    equationOfState
+    {
+        type    perfectGas;
+        rho0    1.225;  // Reference density [kg/m^3]
+    }
+    thermo
+    {
+        type    const;
+        Cp      1005;   // Specific heat [J/(kg·K)]
+        Hf      0;      // Heat of formation [J/kg]
+        eta     1.8e-5; // Dynamic viscosity [Pa·s]
+        Pr      0.7;    // Prandtl number
+    }
+    velocityExponent 0;
+    emissivity        0;
+    absorptivity      0;
+}
+
+// ************************************************************************* //

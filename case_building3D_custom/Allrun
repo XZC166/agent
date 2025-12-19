@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Allrun script for building3D blast simulation
+
+# Source run functions
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+# Clean case
+runApplication rm -rf constant/polyMesh
+runApplication rm -rf 0/*
+runApplication rm -rf processor*
+
+# Generate base mesh
+echo "Generating block mesh..."
+runApplication blockMesh
+
+# Generate refined mesh with snappyHexMesh
+echo "Running snappyHexMesh..."
+runApplication snappyHexMesh -overwrite
+
+# Set initial fields (C4 charge and air)
+echo "Setting initial fields..."
+runApplication setFields
+
+# Run blastFoam solver
+echo "Starting blastFoam simulation..."
+runApplication blastFoam
+
+echo "Simulation completed."
