@@ -1,0 +1,7 @@
+prefix=/media/dev/vdb1/xuzicheng/agent/.conda
+includedir=${prefix}/include
+ 
+Name: FontsProto
+Description: Fonts extension headers
+Version: 2.1.3
+Cflags: -I${includedir}

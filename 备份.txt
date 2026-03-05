@@ -3,4 +3,7 @@
 
 缺少了 Allrun 文件
 
-实验git 
+实验git [Environment]::SetEnvironmentVariable("CLAUDE_CODE_GIT_BASH_PATH", "E:\git-bash\Git\bin\bash.exe", "User")
+
+$env:CLAUDE_CODE_GIT_BASH_PATH = "E:\git-bash\Git\bin\bash.exe"
+claude

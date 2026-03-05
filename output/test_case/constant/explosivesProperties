@@ -1,0 +1,37 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      explosivesProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+explosive
+{
+    type            JWL;
+    name            c4;
+    rho0            1710;        // kg/m3
+    A               8.59e11;      // Pa
+    B               1.42e10;      // Pa
+    R1              4.6;
+    R2              1.35;
+    omega           0.25;
+    E0              6.0e6;        // J/kg
+}
+
+// Optional: define initiation method (e.g., point, plane, or from field)
+initiation
+{
+    type            point;
+    location        (1 1 1);     // arbitrary detonation center — user can adjust
+    radius          0.1;         // m
+}
