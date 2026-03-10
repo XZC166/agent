@@ -7,3 +7,14 @@
 
 $env:CLAUDE_CODE_GIT_BASH_PATH = "E:\git-bash\Git\bin\bash.exe"
 claude
+
+"建立一个3D建筑物爆炸模拟，网格尺寸 10x10x10，输出到 output/test_case 文件夹"
+
+一次性生效：conda activate 只对当前打开的终端窗口有效。如果您关闭终端或新建一个终端窗口，需要重新运行 conda activate ./.conda。
+退出环境：如果想退回系统默认环境，可以输入 conda deactivate。
+conda activate /media/dev/vdb1/xuzicheng/agent/.conda
+
+之后的同个文件提交：
+git add .
+git commit -m “修改名称”
+git push

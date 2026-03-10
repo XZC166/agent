@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#---------------------------------------------------
+# Allrun script for building3D_blast case
+#---------------------------------------------------
+
+# Clean up previous logs
+rm -rf log.*
+
+# Create geometry directory and copy STL file
+mkdir -p constant/geometry
+cp ../stl/L_Wall.stl constant/geometry/
+
+# Generate background mesh
+blockMesh
+
+# Generate refined mesh with snappyHexMesh
+snappyHexMesh -overwrite
+
+# Initialize fields
+setFields
+
+# Run the simulation
+blastFoam
+
+#---------------------------------------------------
+# End of Allrun script
+#---------------------------------------------------

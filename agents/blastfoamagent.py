@@ -16,7 +16,6 @@ def create_directory(path: str) -> str:
     """Creates a directory at the specified path. Returns status message."""
     import json
     try:
-        # Handle case where agent provides JSON string instead of raw path
         if path.strip().startswith('{'):
             try:
                 data = json.loads(path)
@@ -24,10 +23,7 @@ def create_directory(path: str) -> str:
                     path = data['path']
             except:
                 pass
-        
-        # Strip quotes if present (common LLM mistake)
         path = path.strip().strip('"').strip("'")
-
         os.makedirs(path, exist_ok=True)
         return f"Successfully created directory: {path}"
     except Exception as e:
@@ -38,21 +34,17 @@ def write_file(data: str) -> str:
     """Writes content to a file. Input must be a JSON string with 'file_path' and 'content' keys."""
     import json
     try:
-        # Clean up the input string
         cleaned_data = data.strip()
-        # Remove markdown code blocks if present
         if cleaned_data.startswith("```") and cleaned_data.endswith("```"):
             cleaned_data = cleaned_data.strip("`")
             if cleaned_data.startswith("json"):
                 cleaned_data = cleaned_data[4:]
             cleaned_data = cleaned_data.strip()
         
-        # Remove surrounding quotes if it's a stringified JSON
         if (cleaned_data.startswith('"') and cleaned_data.endswith('"')) or \
            (cleaned_data.startswith("'") and cleaned_data.endswith("'")):
             cleaned_data = cleaned_data[1:-1]
 
-        # Parse the input JSON string
         params = json.loads(cleaned_data)
         file_path = params.get('file_path')
         content = params.get('content')
@@ -60,7 +52,6 @@ def write_file(data: str) -> str:
         if not file_path or content is None:
             return "Error: Input must contain 'file_path' and 'content'"
 
-        # Ensure parent directory exists
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
         with open(file_path, 'w', encoding='utf-8') as f:
             f.write(content)
@@ -81,24 +72,51 @@ class BlastFoamAgent:
         
         self.tools = [create_directory, write_file]
         
-        # Define the prompt
         template = '''You are an expert OpenFOAM/BlastFoam simulation engineer.
-Your task is to generate simulation cases based on user requirements and reference cases.
+Your task is to generate complete, RUNNABLE simulation cases based on user requirements and reference cases.
 You have access to the file system to create directories and write configuration files.
 
-You have access to the following tools:
+CRITICAL RULES FOR BLASTFOAM CASE GENERATION:
 
+1. Mesh & Geometry (snappyHexMesh):
+   - For 3D cases, NEVER use `empty` type for Z-faces in blockMeshDict. Use `patch`, `wall`, or `symmetry`.
+   - If a building/STL is involved, there is an existing STL file at `../stl/L_Wall.stl` (relative to your case root).
+   - In your `Allrun` script, ALWAYS add the following lines BEFORE snappyHexMesh:
+     `mkdir -p constant/geometry`
+     `cp ../stl/L_Wall.stl constant/geometry/`
+   - Ensure snappyHexMeshDict correctly references this stl file.
+   - **CRITICAL**: Your `system/snappyHexMeshDict` MUST contain the `addLayersControls {{ ... }}` block, as well as `castellatedMeshControls`, `snapControls`, and `meshQualityControls`. Even if you use `addLayers false;`, the OpenFOAM parser will throw a FATAL ERROR if `addLayersControls` is completely missing.
+
+2. Initial Fields (setFields):
+   - You MUST generate a `system/setFieldsDict`.
+   - If the user does not specify explosive details, assume C4 at position (0, 0, 0) with a reasonable radius (e.g., 0.5m or according to building scale).
+   - Use `volScalarFieldValue` for `alpha.C4` and `alpha.Air` and `e` (internal energy) in setFieldsDict.
+
+3. Completeness of 0/ Directory (Solver Crash Prevention):
+   - blastFoam multi-phase simulations strictly require specific files in the `0` directory.
+   - You MUST ALWAYS generate these files in `0/`: 
+     `p`, `U`, `T`, `e`, `alpha.C4`, `alpha.Air`, AND **`rho.C4`**, **`rho.Air`** (or whatever phases you defined in constant/phaseProperties).
+   - Missing `rho.C4` or `rho.Air` will automatically crash phase fraction/density calculations. Just use a basic uniform internal field based on standard density (e.g. 1.225 for Air, 1630 for C4) with zeroGradient at boundaries.
+   - `alpha.*` files must sum to 1. E.g., internalField for alpha.Air = 1, alpha.C4 = 0.
+   - Temperature `T` must be set (e.g., uniform 300).
+   - Ensure boundary conditions match `blockMeshDict`.
+
+4. System Configuration:
+   - In `system/fvSchemes` -> `ddtSchemes`, you MUST include `timeIntegrator Euler;` along with `default Euler;`.
+   - Ensure `constant/phaseProperties` exists and defines phases correctly (e.g., C4 and Air) along with their equationOfState.
+
+5. Scripts:
+   - `Allrun` MUST be executable, begin with cleanup (`rm -rf log.*`), and correctly copy STL before mesh generation.
+   - `Allclean` MUST be executable and only remove logs, processor*, mesh, and [1-9]* directories, preserving 0/.
+
+You have access to the following tools:
 {tools}
 
 Use the following format:
-
 Question: the input question you must answer
 Thought: you should always think about what to do
 Action: the action to take, should be one of [{tool_names}]
-Action Input: the input to the action.
-- For create_directory: provide ONLY the directory path as a string (e.g., /path/to/dir).
-- For write_file: provide a JSON string with "file_path" and "content" keys.
-
+Action Input: the input to the action (- For write_file: provide a JSON string with "file_path" and "content" keys)
 Observation: the result of the action
 ... (this Thought/Action/Action Input/Observation can repeat N times)
 Thought: I now know the final answer
@@ -127,9 +145,6 @@ Thought:{agent_scratchpad}'''
         )
 
     def run(self, user_request: str, context: str, chat_history: str = ""):
-        """
-        Run the agent with the given user request, context, and chat history.
-        """
         print(f"Agent starting with request: {user_request}")
         try:
             result = self.agent_executor.invoke({
