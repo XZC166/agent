@@ -1,0 +1,35 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      setFieldsDict;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+defaultFieldValues
+(
+    volScalarFieldValue alpha.C4 0
+    volScalarFieldValue alpha.Air 1
+    volScalarFieldValue e 2.5e5
+);
+
+regions
+(
+    cylinderToCell
+    {
+        p1 (1.5 1.5 0.1);
+        p2 (1.5 1.5 0.9);
+        radius 1.5;
+        fieldValues
+        (
+            volScalarFieldValue alpha.C4 1
+            volScalarFieldValue alpha.Air 0
+            volScalarFieldValue e 9.0e6
+        );
+    }
+);
+
+// ************************************************************************* //

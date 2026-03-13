@@ -1,0 +1,57 @@
+/*--------------------------------*- C++ -*----------------------------------*\n  =========                 |\n  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox\n   \\    /   O peration     | Website:  https://openfoam.org\n    \\  /    A nd           | Version:  9\n     \\/     M anipulation  |\n\*---------------------------------------------------------------------------*/
+
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     blastFoam;
+
+startFrom       startTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         0.01;
+
+deltaT          1e-7;
+
+writeControl    timeStep;
+
+writeInterval   100;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable true;
+
+functions
+{
+    probes
+    {
+        type probes;
+        libs ("libsampling.so");
+        writeControl timeStep;
+        writeInterval 1;
+        fields (p U);
+        probeLocations ((1.5 1.5 0.5) (2 0 0));
+    }
+}
+
+// ************************************************************************* //

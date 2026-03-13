@@ -1,0 +1,88 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      fvSolution;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+solvers
+{
+    p
+    {
+        solver          GAMG;
+        tolerance       1e-08;
+        relTol          0.01;
+        smoother        GaussSeidel;
+        nPreSweeps      0;
+        nPostSweeps     2;
+        cacheAgglomeration true;
+        agglomerator    faceAreaPair;
+        nCellsInCoarsestLevel 10;
+        mergeLevels     1;
+    }
+
+    U
+    {
+        solver          smoothSolver;
+        smoother        symGaussSeidel;
+        tolerance       1e-08;
+        relTol          0.01;
+    }
+
+    e
+    {
+        solver          smoothSolver;
+        smoother        symGaussSeidel;
+        tolerance       1e-08;
+        relTol          0.01;
+    }
+
+    rho
+    {
+        solver          smoothSolver;
+        smoother        symGaussSeidel;
+        tolerance       1e-08;
+        relTol          0.01;
+    }
+
+    alpha
+    {
+        solver          smoothSolver;
+        smoother        symGaussSeidel;
+        tolerance       1e-08;
+        relTol          0.01;
+    }
+}
+
+PIMPLE
+{
+    nNonOrthogonalCorrectors 0;
+    nCorrectors              1;
+    nOuterCorrectors         1;
+}
+
+relaxationFactors
+{
+    fields
+    {
+        p               0.3;
+        U               0.7;
+        e               0.7;
+        rho             0.7;
+        alpha           0.7;
+    }
+    equations
+    {
+        p               0.3;
+        U               0.7;
+        e               0.7;
+        rho             0.7;
+        alpha           0.7;
+    }
+}
+
+// ************************************************************************* //
