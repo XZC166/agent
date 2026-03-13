@@ -1,0 +1,79 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  9
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : 9
+Exec   : surfaceFeatures
+Date   : Mar 13 2026
+Time   : 16:52:43
+Host   : "oseasy-desktopVDI"
+PID    : 2368171
+I/O    : uncollated
+Case   : /media/dev/vdb1/xuzicheng/agent/building3D_blast
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+--> FOAM Warning : 
+    From function void* Foam::dlOpen(const Foam::fileName&, bool)
+    in file POSIX.C at line 1247
+    dlopen error : libblastFoam.so: cannot open shared object file: No such file or directory
+--> FOAM Warning : 
+    From function bool Foam::dlLibraryTable::open(const Foam::fileName&, bool)
+    in file db/dynamicLibrary/dlLibraryTable/dlLibraryTable.C at line 106
+    could not load "libblastFoam.so"
+Reading "surfaceFeaturesDict"
+
+Surface            : "L_Wall.stl"
+
+
+Feature line extraction is only valid on closed manifold surfaces.
+Statistics:
+Triangles    : 14
+Vertices     : 8
+Bounding Box : (2 2 0) (4 4 5)
+
+
+Constructing feature set from included angle 150
+Selecting edges purely based on geometric tests: no
+
+Initial feature set:
+    feature points : 8
+    feature edges  : 12
+    of which
+        region edges   : 4
+        external edges : 2
+        internal edges : 6
+
+
+Final feature set:
+points      : 8
+edges       : 12
+boundingBox : (2 2 0) (4 4 5)
+point classification :
+    convex feature points          :        0
+    concave feature points         :        0
+    mixed feature points           :        8
+    other (non-feature) points     :        0
+edge classification :
+    external (convex angle) edges  :        2
+    internal (concave angle) edges :        6
+    flat region edges              :        0
+    open edges                     :        0
+    multiply connected edges       :        4
+
+Writing extendedFeatureEdgeMesh to "constant/extendedFeatureEdgeMesh/L_Wall.extendedFeatureEdgeMesh"
+
+Writing featureEdgeMesh to "constant/geometry/L_Wall.eMesh"
+
+ExecutionTime = 0 s  ClockTime = 0 s
+
+End
+

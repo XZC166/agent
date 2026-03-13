@@ -1,4 +1,4 @@
-建立一个3D建筑物爆炸模拟，参考 blastFoam_building3D 案例
+建立一个3D建筑物爆炸模拟，参考 blastFoam_building3D 案例,输出到一个新的文件夹
 
 
 缺少了 Allrun 文件
@@ -18,3 +18,11 @@ conda activate /media/dev/vdb1/xuzicheng/agent/.conda
 git add .
 git commit -m “修改名称”
 git push
+
+再一次生成的案例出现了新的问题，请根据报错，查看building3D_blast存在什么问题，然后进一步完善agent智能体，使其能够生成可以成功运行的案例
+
+请阅读整个agent智能体代码文件，根据下面由智能体按照“建立一个3D建筑物爆炸模拟，参考 blastFoam_building3D 案例”命令生成的仿真案例的运行报错结果，查看building3D_blast存在什么问题，然后进一步完善agent智能体，使其能够生成可以成功运行的案例
+
+再一次生成的案例出现了新的问题，我发现system文件夹内少了东西，请查看building3D_blast的log存在什么问题，然后进一步完善agent智能体，使其能够生成可以成功运行的案例
+
+请务必再次生成建筑爆炸案例。为缩短时间，blockMeshDict 基础网格建议使用 (40 40 20) ，完全依靠 snappyHexMesh 的 refinementRegions 进行局部加密即可。

@@ -169,33 +169,58 @@ CRITICAL RULES FOR BLASTFOAM CASE GENERATION:
    - In your `blockMeshDict`, the standard vertices for a hex block are: bottom(-z): (0 1 2 3), top(+z): (4 5 6 7). Standard valid faces: inlet(0 4 7 3), outlet(1 2 6 5), front(0 1 5 4), back(3 7 6 2), bottom(0 3 2 1), top(4 5 6 7). NEVER invent non-existent face vertex combinations.
    - For 3D cases, NEVER use `empty` type for Z-faces in blockMeshDict. Use `patch`, `wall`, or `symmetry`.
    - **CRITICAL**: Your `system/snappyHexMeshDict` MUST contain the `meshQualityControls {{ ... }}` block, ALONG WITH `addLayersControls {{ ... }}`, `castellatedMeshControls`, and `snapControls`.
+     - In `castellatedMeshControls`, YOU MUST INCLUDE `maxLocalCells 1000000;`, `maxGlobalCells 2000000;`, `minRefinementCells 10;`, `allowFreeStandingZoneFaces true;` and `locationInMesh (1 1 1);` and `locationInMesh (1 1 1);`, `nCellsBetweenLevels 1;`, and `resolveFeatureAngle 30;`.  
    - **CRITICAL**: If you specify `features` in `castellatedMeshControls`, you MUST run `surfaceFeatures` (or `surfaceFeatureExtract`) before `snappyHexMesh`.
      If you run `surfaceFeatures`, you MUST ALSO generate the `system/surfaceFeaturesDict` file!
-     - **CRITICAL STL RULE**: If your `snappyHexMeshDict` or `surfaceFeaturesDict` uses `.stl` geometry files (like `L_Wall.stl` or similar), YOU MUST GENERATE the ASCII `.stl` content yourself using the tool and save it to `constant/geometry/`. Without this actual STL file, `snappyHexMesh` will crash.
-     - **CRITICAL setFields RULE**: When configuring `setFieldsDict` for the explosive region (e.g. a cylinder of radius 0.1m), your `blockMesh` cell size MUST be small enough to capture it (e.g. cell size <= 0.05m). If your cells are too large, `setFields` will skip it without error, and your explosion will quietly fail (max pressure will stay exactly at ambient).
-     - **CRITICAL STL RULE**: If your `snappyHexMeshDict` or `surfaceFeaturesDict` uses `.stl` geometry files (like `L_Wall.stl` or similar), YOU MUST GENERATE the ASCII `.stl` content yourself using the tool and save it to `constant/geometry/`. Without this actual STL file, `snappyHexMesh` will crash.
-     - **CRITICAL setFields RULE**: When configuring `setFieldsDict` for the explosive region (e.g. a cylinder of radius 0.1m), your `blockMesh` cell size MUST be small enough to capture it (e.g. cell size <= 0.05m). If your cells are too large, `setFields` will skip it without error, and your explosion will quietly fail (max pressure will stay exactly at ambient).
-     CRITICAL: In OpenFOAM 9, the `system/surfaceFeaturesDict` MUST define `surfaces` as a dictionary with `extractionMethod` and `includedAngle`!
+     
+- **CRITICAL**: OpenFOAM 9 `snappyHexMeshDict` is EXTREMELY STRICT. You MUST define `mergeTolerance 1e-6;`, `castellatedMesh true;`, `snap true;`, and `addLayers false;` at the root level.
+- You MUST use EXACTLY this `addLayersControls` block:
+```
+addLayersControls {{ relativeSizes true; layers {{}} expansionRatio 1.0; finalLayerThickness 0.3; minThickness 0.1; nGrow 0; featureAngle 30; slipFeatureAngle 30; nRelaxIter 3; nSmoothSurfaceNormals 1; nSmoothNormals 3; nSmoothThickness 10; maxFaceThicknessRatio 0.5; maxThicknessToMedialRatio 0.3; minMedianAxisAngle 90; nBufferCellsNoExtrude 0; nLayerIter 50; }}
+```
+- You MUST use EXACTLY this `meshQualityControls` block:
+```
+meshQualityControls {{ maxNonOrtho 65; maxBoundarySkewness 20; maxInternalSkewness 4; maxConcave 80; minVol 1e-13; minTetQuality 1e-15; minArea -1; minTwist 0.02; minDeterminant 0.001; minFaceWeight 0.05; minVolRatio 0.01; minTriangleTwist -1; nSmoothScale 4; errorReduction 0.75; relaxed {{ maxNonOrtho 75; }} }}
+```
+
+   - **CRITICAL STL RULE**: If your `snappyHexMeshDict` or `surfaceFeaturesDict` uses `.stl` geometry files (like `L_Wall.stl` or similar), YOU MUST GENERATE the ASCII `.stl` content yourself using the tool and save it to `constant/geometry/`. Without this actual STL file, `snappyHexMesh` will crash.
+     - **CRITICAL setFields RULE**: When configuring `setFieldsDict` for your explosive region, the radius MUST be mathematically larger than the diagonal of your blockMesh cell! If your explosive radius is 0.15m, but your blockMesh cell size is 0.25m, the cell centers miss the cylinder and NO EXPLOSION HAPPENS. For simple, fast runnable cases, KEEP the mesh COARSE to save time (e.g., use `(20 20 10)` for blockMesh) but make absolute SURE your explosive radius AND HEIGHT (p1 to p2) are mathematically larger than a single cell! (e.g., cell length 0.5m -> radius MUST BE 1.5, AND height MUST BE at least 0.8m. DO NOT USE tiny explosive sizes like radius 0.15 or height 0.3m!).
+     CRITICAL: In OpenFOAM 9 (Foundation), the `system/surfaceFeaturesDict` MUST define `surfaces` as a LIST of strings, and `includedAngle` MUST be placed at the root level!
      Example correct format for OpenFOAM 9 in `system/surfaceFeaturesDict`:
      ```
      surfaces
-     {{
+     (
          "L_Wall.stl"
-         {{
-             extractionMethod    extractFromSurface;
-             includedAngle       150;
-         }}
-     }}
+     );
+
+     includedAngle   150;
      ```
-     You MUST include `includedAngle` under the surface name! Do NOT use a list of strings!
+     Do NOT use a dictionary for surfaces! Use a list of strings and put includedAngle at the root!
 
 3. Initial Fields (setFields):
-   - You MUST generate a `system/setFieldsDict` with `volScalarFieldValue` for `alpha.C4` and `alpha.Air` and `e`.
+   - You MUST generate a `system/setFieldsDict` configuring the initial states.
+   - **CRITICAL**: The `regions` block MUST use `fieldValues` array with `volScalarFieldValue`, NEVER use `field` and `value` directly. Example:
+     ```
+     regions
+     (
+         cylinderToCell
+         {{
+             p1 (1.5 1.5 0.1); p2 (1.5 1.5 0.9); radius 1.5; // CRITICAL: MAKE SURE RADIUS IS LARGE (>=1.5) FOR COARSE MESH
+             fieldValues
+             (
+                 volScalarFieldValue alpha.C4 1
+                 volScalarFieldValue alpha.Air 0
+                 volScalarFieldValue e 9.0e6
+             );
+         }}
+     );
+     ```
 
 4. Completeness of 0/ Directory (Solver Crash Prevention):
    - You MUST ALWAYS generate these files in `0/`: 
      `p`, `U`, `T`, `e`, `alpha.C4`, `alpha.Air`, AND `rho.C4`, `rho.Air`.
    - `alpha.*` files must sum to 1. E.g., internalField for alpha.Air = 1, alpha.C4 = 0.
+   - **CRITICAL**: In ALL field files in the `0/` directory (U, p, T, e, alphas), you MUST include a catch-all patch in `boundaryField` for dynamically created walls (like `"(.*Wall.*|L_Wall)" {{ type zeroGradient; }}` or `".*" {{ type zeroGradient; }}`). Without this, `blastFoam` will crash with 'Cannot find patchField entry for L_Wall'.
 
 5. Scripts:
    - `Allrun` MUST be executable (`chmod +x Allrun`). Write `#!/bin/bash` directly. The structure of `Allrun` MUST reference the OpenFOAM RunFunctions like this:

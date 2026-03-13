@@ -1,0 +1,57 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  9                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      phaseProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+phases (C4 Air);
+
+C4
+{
+    type            detonating;
+    reactants
+    {
+        thermoType { transport const; thermo eConst; equationOfState Murnaghan; specie specie; }
+        equationOfState { type Murnaghan; rho0 1601; Gamma 0.25; pRef 101298; K0 8.04e9; K0Prime 7.97; }
+        specie { molWeight 55.0; }
+        transport { mu 0; Pr 1; }
+        thermodynamics { type eConst; Cv 1400; Hf 0; }
+    }
+    products
+    {
+        thermoType { transport const; thermo ePolynomial; equationOfState JWL; specie specie; }
+        equationOfState { type JWL; rho0 1601; A 609.77e9; B 12.95e9; R1 4.5; R2 1.4; omega 0.25; }
+        specie { molWeight 55.0; }
+        transport { mu 0; Pr 1; }
+        thermodynamics { CvCoeffs<8> (413.15 2.1538 0 0 0 0 0 0); Sf 0; Hf 0; }
+    }
+    activationModel none;
+    initiation { E0 9.0e9; }
+    residualRho 1e-6;
+    residualAlpha 1e-6;
+}
+
+Air
+{
+    type            basic;
+    thermoType { transport const; thermo eConst; equationOfState idealGas; specie specie; }
+    equationOfState { type idealGas; gamma 1.4; }
+    specie { molWeight 28.97; }
+    transport { mu 0; Pr 1; }
+    thermodynamics { type eConst; Cv 718; Hf 0; }
+    residualRho 1e-6;
+    residualAlpha 1e-6;
+}
+
+// ************************************************************************* //
