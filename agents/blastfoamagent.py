@@ -81,6 +81,32 @@ You have access to the file system to create directories and write configuration
 
 CRITICAL RULES FOR BLASTFOAM CASE GENERATION:
 
+- **CRITICAL TOKEN CONSERVATION (ANTI-TRUNCATION) RULE**: Generating many OpenFOAM dictionary files often exceeds AI token limits, causing incomplete files and run crashes! To severely reduce token usage:
+  1. DO NOT output the huge OpenFOAM `/*----------*/` banner header in ANY file! Start EVERY file immediately with `FoamFile {{ ... }}` or just the fields if applicable.
+  2. YOU MUST GENERATE `0/e` with `dimensions [0 2 -2 0 0 0 0];` and `internalField uniform 2.5e5;`. You MUST also configure `e` in `system/setFieldsDict` (default 2.5e5, and 9.0e6 in the explosive region). Otherwise blastFoam will crash with a thermodynamic FPE!
+  
+
+- **CRITICAL EXPLOSIVE PLACEMENT (SOLID WALL COLLISION) RULE**: When configuring `setFieldsDict` for your explosive region (`cylinderToCell`), the cylinder's `p1`, `p2`, and `radius` MUST NOT be fully enclosed inside the solid wall STL volume! If your explosive is completely inside the STL building, those cells get deleted by `snappyHexMesh` during generation, leaving ZERO explosive cells in the final mesh ("哑炮", no blast happens!). Always place the explosive OUTSIDE or neatly adjacent to the solid walls (e.g. if building is at `(2 2)` to `(8 8)`, place explosive at `(1.5 1.5)` or `(5 0.5)`).
+
+
+- **CRITICAL EXPLOSIVE PLACEMENT (SOLID WALL COLLISION) RULE**: When configuring `setFieldsDict` for your explosive region (`cylinderToCell`), the cylinder's `p1`, `p2`, and `radius` MUST NOT be fully enclosed inside the solid wall STL volume! If your explosive is completely inside the STL building, those cells get deleted by `snappyHexMesh` during generation, leaving ZERO explosive cells in the final mesh ("哑炮", no blast happens!). Always place the explosive OUTSIDE or neatly adjacent to the solid walls (e.g. if building is at `(2 2)` to `(8 8)`, place explosive at `(1.5 1.5)` or `(5 0.5)`).
+
+- **CRITICAL SAFE EXPLOSION BOUNDS RULE**: The `cylinderToCell` coordinates (`p1` and `p2`) in `system/setFieldsDict` MUST BE COMPLETELY WITHIN the `blockMesh` bounding box! If your blockMesh highest Z is 5, then `p2` MUST NOT exceed 4.9. Placing elements directly on or out of bounds triggers fatal `Floating point exception` in searchCell.
+
+
+- **CRITICAL SNAPPYHEXMESH PERFORMANCE RULE**: For `refinementRegions` inside `snappyHexMeshDict`, NEVER use extreme refinement levels like 3 or 4 inside `mode distance` (e.g., do not use `levels ((0.5 4) ...)`)! High levels create exponentially excessive cell counts (e.g. 300,000+ cells) that take extremely long to compute. ALWAYS restrict maximum refinement levels to `2` (e.g., `levels ((0.5 2));`) or lower to ensure fast grid generation and solving.
+
+
+- **CRITICAL SNAPPYHEXMESH PERFORMANCE RULE**: For `refinementRegions` inside `snappyHexMeshDict`, NEVER use extreme refinement levels like 3 or 4 inside `mode distance` (e.g., do not use `levels ((0.5 4) ...)`)! High levels create exponentially excessive cell counts (e.g. 300,000+ cells) that take extremely long to compute. ALWAYS restrict maximum refinement levels to `2` (e.g., `levels ((0.5 2));`) or lower to ensure fast grid generation and solving.
+
+- **CRITICAL SNAPPYHEXMESH DISTANCE RULE**: When using `mode distance` in `refinementRegions`, the array distances MUST be in strictly INCREASING order. (e.g., `levels ((0.5 4) (1.5 2));` is valid. `((1.5 2) (0.5 4))` will crash snappyHexMesh).
+
+- **CRITICAL FIELD DIMENSIONS RULE**: You must ensure correct OpenFOAM dimension arrays. `p`: `[1 -1 -2 0 0 0 0]`, `U`: `[0 1 -1 0 0 0 0]` (must be volVectorField), `T`: `[0 0 0 1 0 0 0]`, `rho`: `[1 -3 0 0 0 0 0]`, `alpha`: `[0 0 0 0 0 0 0]`, `e`: `[0 2 -2 0 0 0 0]`.
+
+- **CRITICAL PROBES INTEGRATION**: If asked to add measurement probes, place them cleanly inside `system/controlDict` using:
+  `functions {{ probes {{ type probes; libs ("libsampling.so"); writeControl timeStep; writeInterval 1; fields (p U); probeLocations ((1.5 1.5 0.5) (2 0 0)); }} }}`
+
+
 1. System Dictionary Completeness:
    - EVERY OpenFOAM case MUST HAVE a `system/controlDict` file. 
    - You MUST generate `system/fvSchemes` and `system/fvSolution`. In `system/fvSchemes`, you MUST carefully include `fluxScheme` at the root dictionary level (e.g. `fluxScheme Kurganov;`).
