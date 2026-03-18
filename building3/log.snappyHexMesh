@@ -1,0 +1,52 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  9
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : 9
+Exec   : snappyHexMesh -overwrite
+Date   : Mar 17 2026
+Time   : 20:21:27
+Host   : "oseasy-desktopVDI"
+PID    : 1168285
+I/O    : uncollated
+Case   : /media/dev/vdb1/xuzicheng/agent/building3
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+Read mesh in = 0.02 s
+Reading "snappyHexMeshDict"
+
+
+Overall mesh bounding box  : (0 0 0) (10 10 5)
+Relative tolerance         : 1e-06
+Absolute matching distance : 1.5e-05
+
+
+
+--> FOAM FATAL ERROR: 
+scalarFields not found in table.  Valid entries: 
+5
+(
+scalarLevels
+layerFields
+mesh
+noRefinement
+layerSets
+)
+
+
+    From function const T& Foam::HashTable<T, Key, Hash>::operator[](const Key&) const [with T = unsigned int; Key = Foam::word; Hash = Foam::string::hash]
+    in file /home/oseasy/OpenFOAM/OpenFOAM-9/src/OpenFOAM/lnInclude/HashTableI.H at line 126.
+
+FOAM exiting
+

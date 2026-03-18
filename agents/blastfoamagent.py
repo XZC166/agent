@@ -64,7 +64,101 @@ def write_file(data: str) -> str:
     except Exception as e:
         return f"Failed to write to file: {str(e)}"
 
+
+import subprocess
+
+@tool
+def execute_command(data: str) -> str:
+    """Executes a shell command. 
+    Input MUST be a valid JSON string with 'command' (the shell command to run) and 'cwd' (the working directory).
+    Example: {"command": "./Allrun", "cwd": "/path/to/case"}
+    Returns the tail of standard output and standard error (up to 150 lines) to prevent token overflow.
+    It has a timeout of 300 seconds.
+    """
+    import json
+    try:
+        if isinstance(data, dict):
+            params = data
+        else:
+            params = json.loads(data)
+            
+        command = params.get('command')
+        cwd = params.get('cwd')
+        
+        if not command or not cwd:
+            return "Error: Input must contain 'command' and 'cwd'"
+            
+        import os
+        if not os.path.exists(cwd):
+            return f"Error: Working directory does not exist: {cwd}"
+            
+        result = subprocess.run(
+            command, 
+            shell=True, 
+            cwd=cwd, 
+            stdout=subprocess.PIPE, 
+            stderr=subprocess.STDOUT,
+            text=True,
+            timeout=300
+        )
+        
+        output_lines = result.stdout.splitlines()
+        max_lines = 150
+        truncated_output = "\n".join(output_lines[-max_lines:]) if len(output_lines) > max_lines else result.stdout
+        
+        status = "SUCCESS" if result.returncode == 0 else f"FAILED (Return Code {result.returncode})"
+        return f"Execution {status}.\nOutput (tail):\n{truncated_output}"
+        
+    except subprocess.TimeoutExpired as e:
+        out_text = getattr(e, 'stdout', '')
+        if isinstance(out_text, bytes):
+            out_text = out_text.decode('utf-8', errors='ignore')
+        else:
+            out_text = str(out_text)
+        lines = out_text.splitlines()
+        trunc = "\n".join(lines[-150:]) if len(lines) > 150 else out_text
+        return f"Error: Command timed out after 300 seconds.\nOutput:\n{trunc}"
+    except json.JSONDecodeError:
+        return "Error: Input was not a valid JSON string."
+    except Exception as e:
+        return f"Failed to execute command: {str(e)}"
+
+@tool
+def read_log_file(data: str) -> str:
+    """Reads the end of a log file, useful for inspecting OpenFOAM logs or configurations.
+    Input MUST be a valid JSON string with 'file_path' and optionally 'lines' (default 150).
+    Example: {"file_path": "/path/to/case/log.blastFoam", "lines": 150}
+    """
+    import json
+    try:
+        if isinstance(data, dict):
+            params = data
+        else:
+            params = json.loads(data)
+            
+        file_path = params.get('file_path')
+        lines = params.get('lines', 150)
+        
+        if not file_path:
+            return "Error: Input must contain 'file_path'"
+            
+        import os
+        if not os.path.exists(file_path):
+            return f"Error: File does not exist: {file_path}"
+            
+        with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+            lines_content = f.readlines()
+            
+        truncated = "".join(lines_content[-lines:]) if len(lines_content) > lines else "".join(lines_content)
+        return f"Last {min(lines, len(lines_content))} lines of {file_path}:\n{truncated}"
+        
+    except json.JSONDecodeError:
+        return "Error: Input was not a valid JSON string."
+    except Exception as e:
+        return f"Failed to read log file: {str(e)}"
+
 class BlastFoamAgent:
+
     def __init__(self):
         self.llm = ChatOpenAI(
             model=config.LLM_MODEL,
@@ -73,13 +167,35 @@ class BlastFoamAgent:
             temperature=0
         )
         
-        self.tools = [create_directory, write_file]
+        self.tools = [create_directory, write_file, execute_command, read_log_file]
         
         template = '''You are an expert OpenFOAM/BlastFoam simulation engineer.
 Your task is to generate complete, RUNNABLE simulation cases based on user requirements and reference cases.
 You have access to the file system to create directories and write configuration files.
 
 CRITICAL RULES FOR BLASTFOAM CASE GENERATION:
+
+- **CRITICAL AUTO-VERIFICATION & SELF-HEALING RULE (Max 3 Retries)**: 
+  If the user asks you to "run" or "verify" the case:
+  1. Use the `execute_command` tool to run the simulation (e.g., `./Allrun` or specific OpenFOAM commands).
+  2. Analyze the truncated output. If it says FAILED or `Floating point exception` or `FOAM FATAL ERROR` occurs, DO NOT STOP!
+  3. You MUST identify the error cause (read the `log.blastFoam` or command output using `read_log_file` if needed), think about the issue (e.g., missing specific field, syntax error, bounds error), and USE `write_file` tool to rewrite the flawed dictionary!
+  4. THEN, run the verification command again to see if it succeeds.
+  5. You are allowed to retry executing and fixing the case up to 3 times in a single conversation turn. If it succeeds, announce the successful run!
+
+
+
+- **CRITICAL ALLCLEAN RULE**: When creating the `Allclean` script, it MUST explicitly contain:
+  ```bash
+  #!/bin/sh
+  cd ${{0%/*}} || exit 1
+  . $WM_PROJECT_DIR/bin/tools/CleanFunctions
+
+  cleanCase
+  rm -rf constant/polyMesh/ constant/geometry/*.eMesh log.*
+  ```
+  This is required for properly standardizing project cleanup.
+
 
 - **CRITICAL TOKEN CONSERVATION (ANTI-TRUNCATION) RULE**: Generating many OpenFOAM dictionary files often exceeds AI token limits, causing incomplete files and run crashes! To severely reduce token usage:
   1. DO NOT output the huge OpenFOAM `/*----------*/` banner header in ANY file! Start EVERY file immediately with `FoamFile {{ ... }}` or just the fields if applicable.
@@ -280,7 +396,7 @@ Use the following format:
 Question: the input question you must answer
 Thought: you should always think about what to do
 Action: the action to take, should be one of [{tool_names}]
-Action Input: the input to the action (- For write_file: provide a JSON string with "file_path" and "content" keys)
+Action Input: the input to the action (- For write_file: JSON with "file_path", "content". - For execute_command: JSON with "command", "cwd". - For read_log_file: JSON with "file_path", "lines")
 Observation: the result of the action
 ... (this Thought/Action/Action Input/Observation can repeat N times)
 Thought: I now know the final answer
