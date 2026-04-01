@@ -1,0 +1,71 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  9
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : 9
+Exec   : surfaceFeatures
+Date   : Mar 21 2026
+Time   : 22:45:22
+Host   : "oseasy-desktopVDI"
+PID    : 3994738
+I/O    : uncollated
+Case   : /media/dev/vdb1/xuzicheng/agent/building4
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Reading "surfaceFeaturesDict"
+
+Surface            : "L_Wall.stl"
+
+
+Feature line extraction is only valid on closed manifold surfaces.
+Statistics:
+Triangles    : 12
+Vertices     : 8
+Bounding Box : (2 2 0) (8 8 5)
+
+
+Constructing feature set from included angle 150
+Selecting edges purely based on geometric tests: no
+
+Initial feature set:
+    feature points : 8
+    feature edges  : 12
+    of which
+        region edges   : 0
+        external edges : 8
+        internal edges : 4
+
+
+Final feature set:
+points      : 8
+edges       : 12
+boundingBox : (2 2 0) (8 8 5)
+point classification :
+    convex feature points          :        4
+    concave feature points         :        0
+    mixed feature points           :        4
+    other (non-feature) points     :        0
+edge classification :
+    external (convex angle) edges  :        8
+    internal (concave angle) edges :        4
+    flat region edges              :        0
+    open edges                     :        0
+    multiply connected edges       :        0
+
+Writing extendedFeatureEdgeMesh to "constant/extendedFeatureEdgeMesh/L_Wall.extendedFeatureEdgeMesh"
+
+Writing featureEdgeMesh to "constant/geometry/L_Wall.eMesh"
+
+ExecutionTime = 0 s  ClockTime = 0 s
+
+End
+

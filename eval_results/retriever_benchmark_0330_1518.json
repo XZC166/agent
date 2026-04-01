@@ -1,0 +1,497 @@
+[
+    {
+        "id": "Q001",
+        "category": "Function_Scenario",
+        "latency_sec": 0.29,
+        "query": "帮我建立一个水下爆炸仿真案例，参考 underwater_blast。",
+        "top_k_sources": [
+            "blastXiFoam_deflagrationToDetonationTransition.md",
+            "blastXiFoam_deflagrationToDetonationTransition.md",
+            "blastFoam_delayedDetonation.md"
+        ]
+    },
+    {
+        "id": "Q002",
+        "category": "Function_Scenario",
+        "latency_sec": 0.305,
+        "query": "建立一个3D建筑物爆炸模拟，参考 blastFoam_building3D 案例，输出到 building_test 文件夹。",
+        "top_k_sources": [
+            "blastXiFoam_deflagrationToDetonationTransition.md",
+            "blastFoam_delayedDetonation.md",
+            "blastXiFoam_deflagrationToDetonationTransition.md"
+        ]
+    },
+    {
+        "id": "Q003",
+        "category": "Function_Scenario",
+        "latency_sec": 0.268,
+        "query": "用blastFoam做一个城市街区建筑群的连续爆炸模拟，包含多个建筑物。",
+        "top_k_sources": [
+            "blastXiFoam_deflagrationToDetonationTransition.md",
+            "blastFoam_delayedDetonation.md",
+            "blastXiFoam_deflagrationToDetonationTransition.md"
+        ]
+    },
+    {
+        "id": "Q004",
+        "category": "Function_Scenario",
+        "latency_sec": 0.158,
+        "query": "我需要一个密闭隧道内的爆炸波传播案例，隧道长度设定为50m。",
+        "top_k_sources": [
+            "blastFoam_delayedDetonation.md",
+            "blastXiFoam_deflagrationToDetonationTransition.md",
+            "blastXiFoam_deflagrationToDetonationTransition.md"
+        ]
+    },
+    {
+        "id": "Q005",
+        "category": "Function_Scenario",
+        "latency_sec": 0.35,
+        "query": "建立一个带泄爆口的房间内部爆炸模型，参考 blastFoam_room3D。",
+        "top_k_sources": [
+            "blastFoam_delayedDetonation.md",
+            "blastXiFoam_deflagrationToDetonationTransition.md",
+            "blastXiFoam_deflagrationToDetonationTransition.md"
+        ]
+    },
+    {
+        "id": "Q006",
+        "category": "Function_Scenario",
+        "latency_sec": 0.288,
+        "query": "帮我生成一个自由场(free-field)的空爆模型，需要体现冲击波在地面的马赫反射效应。",
+        "top_k_sources": [
+            "blastFoam_freeField.md",
+            "blastFoam_freeField.md",
+            "blastFoam_delayedDetonation.md"
+        ]
+    },
+    {
+        "id": "Q007",
+        "category": "Function_Scenario",
+        "latency_sec": 0.288,
+        "query": "进行一个具有 90 度管道拐角处的激波绕射模拟。",
+        "top_k_sources": [
+            "blastXiFoam_deflagrationToDetonationTransition.md",
+            "blastEulerFoam_shockTube_polydisperse.md",
+            "blastFoam_delayedDetonation.md"
+        ]
+    },
+    {
+        "id": "Q008",
+        "category": "Function_Scenario",
+        "latency_sec": 0.161,
+        "query": "建立一个含有3个爆源的延迟引爆仿真案例，参考 blastFoam_delayedDetonation。",
+        "top_k_sources": [
+            "blastFoam_delayedDetonation.md",
+            "blastXiFoam_deflagrationToDetonationTransition.md",
+            "blastFoam_delayedDetonation.md"
+        ]
+    },
+    {
+        "id": "Q009",
+        "category": "Function_Scenario",
+        "latency_sec": 0.152,
+        "query": "制作一个带障碍物的二维冲击波绕流案例，障碍物为圆柱体。",
+        "top_k_sources": [
+            "blastFoam_delayedDetonation.md",
+            "blastFSIFoam_flap.md",
+            "blastEulerFoam_shockTube_polydisperse.md"
+        ]
+    },
+    {
+        "id": "Q010",
+        "category": "Function_Scenario",
+        "latency_sec": 0.289,
+        "query": "帮我生成一个三相流爆炸案例，包含空气、炸药和沙土三种介质的配置。",
+        "top_k_sources": [
+            "blastXiFoam_deflagrationToDetonationTransition.md",
+            "blastFoam_freeField.md",
+            "blastFoam_delayedDetonation.md"
+        ]
+    },
+    {
+        "id": "Q011",
+        "category": "Function_Scenario",
+        "latency_sec": 0.255,
+        "query": "建立一个深水核爆的简化三维模型验证案例。",
+        "top_k_sources": [
+            "blastXiFoam_deflagrationToDetonationTransition.md",
+            "blastFoam_delayedDetonation.md",
+            "blastFSIFoam_flap.md"
+        ]
+    },
+    {
+        "id": "Q012",
+        "category": "Function_Scenario",
+        "latency_sec": 0.149,
+        "query": "模拟TNT在密闭的钢制球壳内部爆炸的场景。",
+        "top_k_sources": [
+            "blastXiFoam_deflagrationToDetonationTransition.md",
+            "blastFoam_delayedDetonation.md",
+            "blastXiFoam_deflagrationToDetonationTransition.md"
+        ]
+    },
+    {
+        "id": "Q013",
+        "category": "Function_Scenario",
+        "latency_sec": 0.402,
+        "query": "请参考 wedge 案例，设定一个二维的楔形体表面爆炸流场模拟。",
+        "top_k_sources": [
+            "blastFoam_delayedDetonation.md",
+            "blastFoam_mappedBuilding3D_wedge.md",
+            "blastFoam_axisymmetricCharge.md"
+        ]
+    },
+    {
+        "id": "Q014",
+        "category": "Function_Scenario",
+        "latency_sec": 0.307,
+        "query": "创建一个模拟高能气体膨胀的 1D shock tube (激波管) 测试案例。",
+        "top_k_sources": [
+            "blastEulerFoam_shockTube_polydisperse.md",
+            "blastReactingFoam_reacting.md",
+            "blastReactingFoam_reacting.md"
+        ]
+    },
+    {
+        "id": "Q015",
+        "category": "Function_Scenario",
+        "latency_sec": 0.426,
+        "query": "参考 blastFoam 自带的案例，做一个空气和水交界面处的爆炸模拟。",
+        "top_k_sources": [
+            "blastFoam_burstingWindow_workshop.md",
+            "blastFoam_internalDetonation_internalDetonation_withObstacleAndGlass.md",
+            "blastFoam_building3D.md"
+        ]
+    },
+    {
+        "id": "Q016",
+        "category": "Physics_Parameter",
+        "latency_sec": 0.299,
+        "query": "建立一个带有 JWL 状态方程的 C4 炸药气爆模型，炸药区初始比内能设为 9.0e6。",
+        "top_k_sources": [
+            "blastFoam_building3DWorkshop.md",
+            "blastFoam_mappedBuilding3D_wedge.md",
+            "blastFoam_axisymmetricCharge.md"
+        ]
+    },
+    {
+        "id": "Q017",
+        "category": "Physics_Parameter",
+        "latency_sec": 0.261,
+        "query": "帮我配置一个 blastFoam 案例，要求在 fvSchemes 里严格使用 Kurganov fluxScheme 和 Euler timeIntegrator。",
+        "top_k_sources": [
+            "blastFoam_freeField.md",
+            "blastFoam_delayedDetonation.md",
+            "blastFoam_axisymmetricCharge.md"
+        ]
+    },
+    {
+        "id": "Q018",
+        "category": "Physics_Parameter",
+        "latency_sec": 0.265,
+        "query": "使用 snappyHexMesh 进行网格划分，要求在测点(2.0, 1.5, 0)附近进行 mode为distance 的两级局部加密。",
+        "top_k_sources": [
+            "blastFoam_delayedDetonation.md",
+            "blastFoam_freeField.md",
+            "blastEulerFoam_shockTube_polydisperse.md"
+        ]
+    },
+    {
+        "id": "Q019",
+        "category": "Physics_Parameter",
+        "latency_sec": 0.149,
+        "query": "生成一个爆炸案例，0文件夹中背景场 p 设为标准大气压 101325 Pa，温度 T 设为 300K。",
+        "top_k_sources": [
+            "blastXiFoam_deflagrationToDetonationTransition.md",
+            "blastXiFoam_deflagrationToDetonationTransition.md",
+            "blastFoam_delayedDetonation.md"
+        ]
+    },
+    {
+        "id": "Q020",
+        "category": "Physics_Parameter",
+        "latency_sec": 0.328,
+        "query": "指定炸药类型为 TNT，使用 idealGas 状态方程作为空气背景，并开启 controlDict 的自适应时间步长。",
+        "top_k_sources": [
+            "blastXiFoam_deflagrationToDetonationTransition.md",
+            "blastXiFoam_deflagrationToDetonationTransition.md",
+            "blastFoam_delayedDetonation.md"
+        ]
+    },
+    {
+        "id": "Q021",
+        "category": "Physics_Parameter",
+        "latency_sec": 0.261,
+        "query": "帮我写一个插值格式包含 vanLeer 限制器的 fvSchemes 字典模板，重建包含 rho, U, p, e。",
+        "top_k_sources": [
+            "blastXiFoam_deflagrationToDetonationTransition.md",
+            "blastFoam_delayedDetonation.md",
+            "blastReactingFoam_obliqueShock.md"
+        ]
+    },
+    {
+        "id": "Q022",
+        "category": "Physics_Parameter",
+        "latency_sec": 0.176,
+        "query": "设置一个 blockMeshDict，几何域范围是长宽高各20m，划分30x30x30的网格，六个面都是 zeroGradient。",
+        "top_k_sources": [
+            "blastFoam_delayedDetonation.md",
+            "blastFoam_freeField.md",
+            "blastFoam_axisymmetricCharge.md"
+        ]
+    },
+    {
+        "id": "Q023",
+        "category": "Physics_Parameter",
+        "latency_sec": 0.262,
+        "query": "在 fvSolution 中，用 PBiCGStab 求解器来解能量 e 和密度 rho，请帮我生成对应的字典。",
+        "top_k_sources": [
+            "blastFoam_mappedBuilding3D_sector.md",
+            "blastFoam_delayedDetonation.md",
+            "blastXiFoam_deflagrationToDetonationTransition.md"
+        ]
+    },
+    {
+        "id": "Q024",
+        "category": "Physics_Parameter",
+        "latency_sec": 0.276,
+        "query": "在 controlDict 函数 functions 中布设三个 probes，分别是(1 1 1)，(2 2 2)，和(3 3 3)，采样写出频率为 1。",
+        "top_k_sources": [
+            "blastFoam_axisymmetricCharge.md",
+            "blastFoam_axisymmetricCharge.md",
+            "blastEulerFoam_reactingParticles.md"
+        ]
+    },
+    {
+        "id": "Q025",
+        "category": "Physics_Parameter",
+        "latency_sec": 0.241,
+        "query": "使用 setFieldsDict 生成一个cylinderToCell 的装药区域，p1 (1 1 0.1), p2 (1 1 0.9), 半径 1.0, alpha.C4 设定为 1。",
+        "top_k_sources": [
+            "blastFoam_delayedDetonation.md",
+            "blastFoam_axisymmetricCharge.md",
+            "blastFoam_burstingWindow_workshop.md"
+        ]
+    },
+    {
+        "id": "Q026",
+        "category": "Physics_Parameter",
+        "latency_sec": 0.132,
+        "query": "建立一个案例，其相属性 phaseProperties 中，必须明确标出 C4 的 reactants 和 products，并给出 Murnaghan 系数。",
+        "top_k_sources": [
+            "blastFSIFoam_building3D.md",
+            "blastFoam_internalDetonation_internalDetonation.md",
+            "blastFoam_mappedBuilding3D_sector.md"
+        ]
+    },
+    {
+        "id": "Q027",
+        "category": "Physics_Parameter",
+        "latency_sec": 0.169,
+        "query": "给我一个完整的 0/alpha.Air 文件，边界场 boundaryField 使用正则表达式 \".*\" 匹配所有边界为 zeroGradient。",
+        "top_k_sources": [
+            "blastFoam_delayedDetonation.md",
+            "blastFoam_delayedDetonation.md",
+            "blastEulerFoam_shockTube_polydisperse.md"
+        ]
+    },
+    {
+        "id": "Q028",
+        "category": "Physics_Parameter",
+        "latency_sec": 0.179,
+        "query": "生成 snappyHexMeshDict，设置 castellatedMesh true; snap true; addLayers false; maxLocalCells 2000000;。",
+        "top_k_sources": [
+            "blastFoam_delayedDetonation.md",
+            "blastFoam_freeField.md",
+            "blastFSIFoam_flap.md"
+        ]
+    },
+    {
+        "id": "Q029",
+        "category": "Physics_Parameter",
+        "latency_sec": 0.32,
+        "query": "生成一次计算时间为 0.005 秒的模拟，deltaT 设置为 1e-7，要求输出写出间隔 writeInterval 为 0.001。",
+        "top_k_sources": [
+            "blastFoam_internalDetonation_internalDetonation.md",
+            "blastFoam_internalDetonation_internalDetonation_withObstacleAndGlass.md",
+            "blastFoam_internalDetonation_internalDetonation.md"
+        ]
+    },
+    {
+        "id": "Q030",
+        "category": "Physics_Parameter",
+        "latency_sec": 0.18,
+        "query": "创建一个包含相变(activationModel)的引爆模型字典片段。",
+        "top_k_sources": [
+            "blastXiFoam_deflagrationToDetonationTransition.md",
+            "blastFoam_delayedDetonation.md",
+            "blastXiFoam_deflagrationToDetonationTransition.md"
+        ]
+    },
+    {
+        "id": "Q031",
+        "category": "Vague_Semantic",
+        "latency_sec": 0.249,
+        "query": "我想做一个 L 型建筑被高压气体冲击的 3D 模拟，里面需要你自己用代码利用 STL 画一堵多边形的墙并切网格。",
+        "top_k_sources": [
+            "blastFoam_building3D.md",
+            "blastFoam_building3DWorkshop.md",
+            "blastFoam_burstingWindow_workshop.md"
+        ]
+    },
+    {
+        "id": "Q032",
+        "category": "Vague_Semantic",
+        "latency_sec": 0.154,
+        "query": "弄个炸药在房子外面炸开的例子，房子要在 x=4 的位置，切记不要把炸弹设在房子内部变成哑炮！",
+        "top_k_sources": [
+            "blastFoam_delayedDetonation.md",
+            "blastXiFoam_deflagrationToDetonationTransition.md",
+            "blastFoam_freeField.md"
+        ]
+    },
+    {
+        "id": "Q033",
+        "category": "Vague_Semantic",
+        "latency_sec": 0.152,
+        "query": "随便给我来一个简单的空气中引爆炸弹的测试教程，名字叫 test_bomb，网格划得越粗越好，只为了测试我显卡速度。",
+        "top_k_sources": [
+            "blastFoam_delayedDetonation.md",
+            "blastXiFoam_deflagrationToDetonationTransition.md",
+            "blastFoam_delayedDetonation.md"
+        ]
+    },
+    {
+        "id": "Q034",
+        "category": "Vague_Semantic",
+        "latency_sec": 0.277,
+        "query": "那个什么，怎么在blastFoam里设置多颗炸药在不同时间引爆？给我写个相应的带延迟爆炸的例子看看。",
+        "top_k_sources": [
+            "blastFoam_delayedDetonation.md",
+            "blastFoam_delayedDetonation.md",
+            "blastXiFoam_deflagrationToDetonationTransition.md"
+        ]
+    },
+    {
+        "id": "Q035",
+        "category": "Vague_Semantic",
+        "latency_sec": 0.135,
+        "query": "我不知道怎么弄复杂边界，你想办法给我搞一个上面是天空开口，下面是地面的半球形爆炸扩散案例，不用很细致。",
+        "top_k_sources": [
+            "blastFoam_delayedDetonation.md",
+            "blastFoam_freeField.md",
+            "blastEulerFoam_shockTube_polydisperse.md"
+        ]
+    },
+    {
+        "id": "Q036",
+        "category": "Vague_Semantic",
+        "latency_sec": 0.184,
+        "query": "跑一个爆破的案例，如果用 ./Allrun 提示 timeout 超时的话，你得帮我阅读 log 看看是算正常还是很慢卡死了，然后修正它。",
+        "top_k_sources": [
+            "blastXiFoam_deflagrationToDetonationTransition.md",
+            "blastFoam_delayedDetonation.md",
+            "blastFoam_delayedDetonation.md"
+        ]
+    },
+    {
+        "id": "Q037",
+        "category": "Vague_Semantic",
+        "latency_sec": 0.274,
+        "query": "帮我建一个模拟，炸弹威力超级大，但是把网格全画粗一点，不然算着费时间。",
+        "top_k_sources": [
+            "blastFoam_delayedDetonation.md",
+            "blastFoam_freeField.md",
+            "blastFoam_delayedDetonation.md"
+        ]
+    },
+    {
+        "id": "Q038",
+        "category": "Vague_Semantic",
+        "latency_sec": 0.273,
+        "query": "模拟个东西，大概就是个球状炸弹在封闭盒子里爆开，不管你参考什么原理，最后必须带一份能一键执行的 Allrun 脚本。",
+        "top_k_sources": [
+            "blastXiFoam_deflagrationToDetonationTransition.md",
+            "blastFoam_delayedDetonation.md",
+            "blastFoam_delayedDetonation.md"
+        ]
+    },
+    {
+        "id": "Q039",
+        "category": "Vague_Semantic",
+        "latency_sec": 0.297,
+        "query": "只要一个最简单的原点爆炸算例，但是你生成的 Allclean 里必须包含把 eMesh 文件和 log 日志文件全部删干净的指令。",
+        "top_k_sources": [
+            "blastFoam_delayedDetonation.md",
+            "blastXiFoam_deflagrationToDetonationTransition.md",
+            "blastFoam_freeField.md"
+        ]
+    },
+    {
+        "id": "Q040",
+        "category": "Vague_Semantic",
+        "latency_sec": 0.137,
+        "query": "我要一个关于建筑的案例，但我没有权限写进当前的 root 目录，你等会自己看看系统里哪里能创建文件夹，在那里面跑。",
+        "top_k_sources": [
+            "blastFoam_delayedDetonation.md",
+            "blastFoam_delayedDetonation.md",
+            "blastXiFoam_deflagrationToDetonationTransition.md"
+        ]
+    },
+    {
+        "id": "Q041",
+        "category": "Vague_Semantic",
+        "latency_sec": 0.167,
+        "query": "用那个叫 OpenFOAM 的流体工具，跑个随便什么爆炸算例，要是它执行命令的时候报了错你就自己重试，最多试3次。",
+        "top_k_sources": [
+            "blastFoam_delayedDetonation.md",
+            "blastFoam_building3D.md",
+            "blastFoam_burstingWindow_workshop.md"
+        ]
+    },
+    {
+        "id": "Q042",
+        "category": "Vague_Semantic",
+        "latency_sec": 0.163,
+        "query": "帮我生成一个带很多个压力传感器的测点案例，随便布置几个观测不同位置的数据。",
+        "top_k_sources": [
+            "blastEulerFoam_shockTube_polydisperse.md",
+            "blastFoam_freeField.md",
+            "blastFoam_delayedDetonation.md"
+        ]
+    },
+    {
+        "id": "Q043",
+        "category": "Vague_Semantic",
+        "latency_sec": 0.152,
+        "query": "不管怎么样，创建一个文件夹叫 my_blast，在里面给我把一个包含炸药和空气的多相流体系建立完整，要求求解时不崩溃。",
+        "top_k_sources": [
+            "blastXiFoam_deflagrationToDetonationTransition.md",
+            "blastFoam_freeField.md",
+            "blastFoam_delayedDetonation.md"
+        ]
+    },
+    {
+        "id": "Q044",
+        "category": "Vague_Semantic",
+        "latency_sec": 0.144,
+        "query": "网格尺寸 10x10x10，输出到 output/test_case 文件夹下，爆炸点自己看着设定个合理的。",
+        "top_k_sources": [
+            "blastFoam_delayedDetonation.md",
+            "blastEulerFoam_shockTube_polydisperse.md",
+            "blastFoam_delayedDetonation.md"
+        ]
+    },
+    {
+        "id": "Q045",
+        "category": "Vague_Semantic",
+        "latency_sec": 0.341,
+        "query": "做一个楼房的 blast 仿真，参考教程里的 building3D，运行它并帮我诊断最后到底稳定发散了没有。",
+        "top_k_sources": [
+            "blastFoam_mappedBuilding3D.md",
+            "blastFoam_mappedBuilding3D_wedge.md",
+            "blastFoam_burstingWindow_workshop.md"
+        ]
+    }
+]

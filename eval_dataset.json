@@ -1,0 +1,820 @@
+[
+    {
+        "id": "Q001",
+        "category": "Function_Scenario",
+        "prompt": "Build a basic free-field clear air explosion model without any building blockages.",
+        "ground_truth": [
+            "blastFoam_freeField.md"
+        ]
+    },
+    {
+        "id": "Q002",
+        "category": "Physics_Parameter",
+        "prompt": "In a free-field explosion, set the background pressure to 101325Pa and use the waveTransmissive boundary condition in the 0/p dictionary to avoid reflections.",
+        "ground_truth": [
+            "blastFoam_freeField.md"
+        ]
+    },
+    {
+        "id": "Q003",
+        "category": "Vague_Semantic",
+        "prompt": "Run the simplest open-field bomb example for me, as simple as possible, just to verify if my installation is correct.",
+        "ground_truth": [
+            "blastFoam_freeField.md"
+        ]
+    },
+    {
+        "id": "Q004",
+        "category": "Function_Scenario",
+        "prompt": "Set up a TNT free-field explosion calculation case in air and record the far-field overpressure.",
+        "ground_truth": [
+            "blastFoam_freeField.md"
+        ]
+    },
+    {
+        "id": "Q005",
+        "category": "Function_Scenario",
+        "prompt": "Generate a 3D blast simulation containing a building (building3D) and use snappyHexMesh for meshing.",
+        "ground_truth": [
+            "blastFoam_building3D.md",
+            "blastFoam_building3DWorkshop.md",
+            "blastFoam_mappedBuilding3D.md"
+        ]
+    },
+    {
+        "id": "Q006",
+        "category": "Physics_Parameter",
+        "prompt": "In the building3D case, configure snappyHexMeshDict to perform a 2-level local refinement on the feature edges of the building surface.",
+        "ground_truth": [
+            "blastFoam_building3D.md",
+            "blastFoam_building3DWorkshop.md"
+        ]
+    },
+    {
+        "id": "Q007",
+        "category": "Vague_Semantic",
+        "prompt": "I want to see what an explosion looks like next to a building, give me a related case, no fluid-structure interaction.",
+        "ground_truth": [
+            "blastFoam_building3D.md",
+            "blastFoam_mappedBuilding3D.md"
+        ]
+    },
+    {
+        "id": "Q008",
+        "category": "Function_Scenario",
+        "prompt": "Create a large 3D block or building case subjected to external shock wave diffusion.",
+        "ground_truth": [
+            "blastFoam_building3D.md",
+            "blastFoam_mappedBuilding3D_sector.md"
+        ]
+    },
+    {
+        "id": "Q009",
+        "category": "Function_Scenario",
+        "prompt": "Simulate an internal detonation process inside a closed room.",
+        "ground_truth": [
+            "blastFoam_internalDetonation_internalDetonation.md"
+        ]
+    },
+    {
+        "id": "Q010",
+        "category": "Function_Scenario",
+        "prompt": "Generate a closed room internal blast case with obstacles and glass windows.",
+        "ground_truth": [
+            "blastFoam_internalDetonation_internalDetonation_withObstacleAndGlass.md"
+        ]
+    },
+    {
+        "id": "Q011",
+        "category": "Physics_Parameter",
+        "prompt": "Limit the maximum Courant number to 0.5 in the internal blast model to ensure the solver does not diverge during multiple shock reflections indoors.",
+        "ground_truth": [
+            "blastFoam_internalDetonation_internalDetonation.md"
+        ]
+    },
+    {
+        "id": "Q012",
+        "category": "Vague_Semantic",
+        "prompt": "Is there a tutorial on detonating a bomb in a sealed room? Put an obstacle in it as well.",
+        "ground_truth": [
+            "blastFoam_internalDetonation_internalDetonation_withObstacleAndGlass.md"
+        ]
+    },
+    {
+        "id": "Q013",
+        "category": "Function_Scenario",
+        "prompt": "Create a case with multiple independent initiation sources having different delayed detonation times.",
+        "ground_truth": [
+            "blastFoam_delayedDetonation.md"
+        ]
+    },
+    {
+        "id": "Q014",
+        "category": "Physics_Parameter",
+        "prompt": "Configure two separate charge regions in setFieldsDict using the boxToCell instruction.",
+        "ground_truth": [
+            "blastFoam_delayedDetonation.md",
+            "blastFoam_twoChargeDetonation.md"
+        ]
+    },
+    {
+        "id": "Q015",
+        "category": "Function_Scenario",
+        "prompt": "Detonate two charges simultaneously (twoChargeDetonation) and observe the Mach stem phenomenon where shock waves collide in the middle.",
+        "ground_truth": [
+            "blastFoam_twoChargeDetonation.md"
+        ]
+    },
+    {
+        "id": "Q016",
+        "category": "Vague_Semantic",
+        "prompt": "I need a chain of explosions! Several bombs exploding one by one at different times.",
+        "ground_truth": [
+            "blastFoam_delayedDetonation.md"
+        ]
+    },
+    {
+        "id": "Q017",
+        "category": "Function_Scenario",
+        "prompt": "Use a wedge block to build an axisymmetric 2D cylindrical charge explosion case.",
+        "ground_truth": [
+            "blastFoam_axisymmetricCharge.md"
+        ]
+    },
+    {
+        "id": "Q018",
+        "category": "Physics_Parameter",
+        "prompt": "Set up a 2D wedge computational domain, where the front and back face types are set to wedge boundary conditions.",
+        "ground_truth": [
+            "blastFoam_axisymmetricCharge.md",
+            "blastFoam_mappedBuilding3D_wedge.md"
+        ]
+    },
+    {
+        "id": "Q019",
+        "category": "Vague_Semantic",
+        "prompt": "3D calculation is too slow, convert it to an axisymmetric 2D model to calculate the cylindrical bomb.",
+        "ground_truth": [
+            "blastFoam_axisymmetricCharge.md"
+        ]
+    },
+    {
+        "id": "Q020",
+        "category": "Function_Scenario",
+        "prompt": "Perform a deformation calculation simulation of a flexible flap containing fluid-structure interaction (FSI).",
+        "ground_truth": [
+            "blastFSIFoam_flap.md",
+            "solids4Foam_flap.md",
+            "preCICE_flap_Fluid.md"
+        ]
+    },
+    {
+        "id": "Q021",
+        "category": "Physics_Parameter",
+        "prompt": "In the fluid-structure interaction calculation, set the pointDisplacement dynamic mesh boundary condition for the solid boundaries.",
+        "ground_truth": [
+            "blastFSIFoam_flap.md",
+            "solids4Foam_flap.md"
+        ]
+    },
+    {
+        "id": "Q022",
+        "category": "Vague_Semantic",
+        "prompt": "Are there any examples where a shock wave bends a metal flap? I need cases that can compute structural deformation.",
+        "ground_truth": [
+            "blastFSIFoam_flap.md",
+            "solids4Foam_flap.md"
+        ]
+    },
+    {
+        "id": "Q023",
+        "category": "Function_Scenario",
+        "prompt": "Two-way fluid-structure interaction blast impact with buildings (FSIFoam_building3D).",
+        "ground_truth": [
+            "blastFSIFoam_building3D.md"
+        ]
+    },
+    {
+        "id": "Q024",
+        "category": "Function_Scenario",
+        "prompt": "Establish a 1D high-pressure gas expansion shock tube validation case.",
+        "ground_truth": [
+            "blastEulerFoam_shockTube_polydisperse.md",
+            "blastFoam_shockTube_tabulated.md"
+        ]
+    },
+    {
+        "id": "Q025",
+        "category": "Physics_Parameter",
+        "prompt": "Set an extremely high pressure in the driver section of the shock tube, and a low pressure in the driven section, without chemical reactions.",
+        "ground_truth": [
+            "blastEulerFoam_shockTube_polydisperse.md",
+            "blastFoam_shockTube_tabulated.md"
+        ]
+    },
+    {
+        "id": "Q026",
+        "category": "Vague_Semantic",
+        "prompt": "I want to verify airflow impact caused purely by a pressure difference, similar to a shock tube experiment.",
+        "ground_truth": [
+            "blastEulerFoam_shockTube_polydisperse.md",
+            "blastFoam_shockTube_tabulated.md"
+        ]
+    },
+    {
+        "id": "Q027",
+        "category": "Function_Scenario",
+        "prompt": "Simulate the complex flow field of a triple point shock wave interaction.",
+        "ground_truth": [
+            "blastFoam_triplePointShockInteration.md"
+        ]
+    },
+    {
+        "id": "Q028",
+        "category": "Function_Scenario",
+        "prompt": "Set up a forward supersonic step to study shock wave diffraction and reflection principles.",
+        "ground_truth": [
+            "blastParcelFoam_forwardStep.md"
+        ]
+    },
+    {
+        "id": "Q029",
+        "category": "Physics_Parameter",
+        "prompt": "Configure an extremely high flux differencing accuracy for the step flow case, such as using HLLC fluxScheme to capture reflected shock waves.",
+        "ground_truth": [
+            "blastParcelFoam_forwardStep.md",
+            "blastFoam_triplePointShockInteration.md"
+        ]
+    },
+    {
+        "id": "Q030",
+        "category": "Vague_Semantic",
+        "prompt": "I just want to test how a shock wave diffracts when it hits a forward step.",
+        "ground_truth": [
+            "blastParcelFoam_forwardStep.md"
+        ]
+    },
+    {
+        "id": "Q031",
+        "category": "Function_Scenario",
+        "prompt": "Build a factory explosion case involving energy leaking outwards from a bursting window.",
+        "ground_truth": [
+            "blastFoam_burstingWindow_workshop.md"
+        ]
+    },
+    {
+        "id": "Q032",
+        "category": "Physics_Parameter",
+        "prompt": "Set the obstacle to become a destructible material (activation pressure threshold) in its phase properties.",
+        "ground_truth": [
+            "blastFoam_burstingWindow_workshop.md"
+        ]
+    },
+    {
+        "id": "Q033",
+        "category": "Vague_Semantic",
+        "prompt": "Is there an official example modeling an explosion wave shattering a window and leaking out?",
+        "ground_truth": [
+            "blastFoam_burstingWindow_workshop.md"
+        ]
+    },
+    {
+        "id": "Q034",
+        "category": "Function_Scenario",
+        "prompt": "Using the mapped approach, map the results from a 1D calculation with mapFields to a 3D building mesh to continue calculation.",
+        "ground_truth": [
+            "blastFoam_mappedBuilding3D.md",
+            "blastFoam_mappedBuilding3D_sector.md"
+        ]
+    },
+    {
+        "id": "Q035",
+        "category": "Physics_Parameter",
+        "prompt": "Set up a sector mesh or use mapFieldsDict to match the 1D source and 3D target domain.",
+        "ground_truth": [
+            "blastFoam_mappedBuilding3D_sector.md",
+            "blastFoam_mappedBuilding3D_wedge.md"
+        ]
+    },
+    {
+        "id": "Q036",
+        "category": "Vague_Semantic",
+        "prompt": "Directly map from a point source explosion to a large 3D building area, I think it's called mapped something, show me how to do it.",
+        "ground_truth": [
+            "blastFoam_mappedBuilding3D.md"
+        ]
+    },
+    {
+        "id": "Q037",
+        "category": "Function_Scenario",
+        "prompt": "Simulate the deflagration to detonation transition (DDT) through chemical reactions and multi-phase flows.",
+        "ground_truth": [
+            "blastXiFoam_deflagrationToDetonationTransition.md"
+        ]
+    },
+    {
+        "id": "Q038",
+        "category": "Function_Scenario",
+        "prompt": "Establish the physical process of continuous reacting flow under an oblique shock.",
+        "ground_truth": [
+            "blastReactingFoam_obliqueShock.md"
+        ]
+    },
+    {
+        "id": "Q039",
+        "category": "Physics_Parameter",
+        "prompt": "Open the thermophysicalProperties dictionary related to the combustion solver and enable specific reaction sets.",
+        "ground_truth": [
+            "blastXiFoam_deflagrationToDetonationTransition.md",
+            "blastReactingFoam_reacting.md"
+        ]
+    },
+    {
+        "id": "Q040",
+        "category": "Vague_Semantic",
+        "prompt": "Not a regular blast, but a complex case with a detonation evolution process, transitioning from deflagration to detonation.",
+        "ground_truth": [
+            "blastXiFoam_deflagrationToDetonationTransition.md"
+        ]
+    },
+    {
+        "id": "Q041",
+        "category": "Function_Scenario",
+        "prompt": "Track the trajectory distribution of reacting particles within an explosion or reacting flow field.",
+        "ground_truth": [
+            "blastEulerFoam_reactingParticles.md"
+        ]
+    },
+    {
+        "id": "Q042",
+        "category": "Function_Scenario",
+        "prompt": "Calculate the dynamic changes in overpressure near a moving cone.",
+        "ground_truth": [
+            "blastFoam_movingCone.md"
+        ]
+    },
+    {
+        "id": "Q043",
+        "category": "Vague_Semantic",
+        "prompt": "Are there explosion field calculations involving particulated matter? Not purely gas.",
+        "ground_truth": [
+            "blastEulerFoam_reactingParticles.md"
+        ]
+    },
+    {
+        "id": "Q044",
+        "category": "Vague_Semantic",
+        "prompt": "Calculate the flow field around a constantly moving conical object.",
+        "ground_truth": [
+            "blastFoam_movingCone.md"
+        ]
+    },
+    {
+        "id": "Q045",
+        "category": "Function_Scenario",
+        "prompt": "Use initializeAtmosphere to configure a background atmospheric environment with a gravity gradient varying with height.",
+        "ground_truth": [
+            "initializeAtmosphere.md"
+        ]
+    },
+    {
+        "id": "Q046",
+        "category": "Physics_Parameter",
+        "prompt": "In the initialization script, set the gravity field g to (0 0 -9.81) and describe the p profile according to the isothermal atmosphere formula.",
+        "ground_truth": [
+            "initializeAtmosphere.md"
+        ]
+    },
+    {
+        "id": "Q047",
+        "category": "Vague_Semantic",
+        "prompt": "Help me calculate a pre-step, balancing the background high and low altitude pressure difference due to gravity.",
+        "ground_truth": [
+            "initializeAtmosphere.md"
+        ]
+    },
+    {
+        "id": "Q048",
+        "category": "Physics_Parameter",
+        "prompt": "Before running a pure unobstructed free-field explosion, if it's a structured mesh, teach me how to modify blockMeshDict.",
+        "ground_truth": [
+            "blastFoam_freeField.md"
+        ]
+    },
+    {
+        "id": "Q049",
+        "category": "Physics_Parameter",
+        "prompt": "Before running a 3D building impacted by blast, if it's a structured mesh, teach me how to modify blockMeshDict.",
+        "ground_truth": [
+            "blastFoam_building3D.md"
+        ]
+    },
+    {
+        "id": "Q050",
+        "category": "Physics_Parameter",
+        "prompt": "For the an explosion inside a closed, internal room case, configure reasonable endTime and writeInterval.",
+        "ground_truth": [
+            "blastFoam_internalDetonation_internalDetonation.md"
+        ]
+    },
+    {
+        "id": "Q051",
+        "category": "Physics_Parameter",
+        "prompt": "For the multiple charges with delayed detonation times case, configure reasonable endTime and writeInterval.",
+        "ground_truth": [
+            "blastFoam_delayedDetonation.md"
+        ]
+    },
+    {
+        "id": "Q052",
+        "category": "Physics_Parameter",
+        "prompt": "In the configuration file of an axisymmetric wedge explosion domain, specify the turbulence model or adjust the differencing scheme.",
+        "ground_truth": [
+            "blastFoam_axisymmetricCharge.md"
+        ]
+    },
+    {
+        "id": "Q053",
+        "category": "Function_Scenario",
+        "prompt": "Regarding a 1D shock tube, establish a matching physical computational domain.",
+        "ground_truth": [
+            "blastEulerFoam_shockTube_polydisperse.md"
+        ]
+    },
+    {
+        "id": "Q054",
+        "category": "Physics_Parameter",
+        "prompt": "Before running breakthrough leakage of a bursting window, if it's a structured mesh, teach me how to modify blockMeshDict.",
+        "ground_truth": [
+            "blastFoam_burstingWindow_workshop.md"
+        ]
+    },
+    {
+        "id": "Q055",
+        "category": "Vague_Semantic",
+        "prompt": "For the example called fluid-structure interaction deforming a metal flap, no theoretical explanation needed, just give me a runnable script.",
+        "ground_truth": [
+            "blastFSIFoam_flap.md"
+        ]
+    },
+    {
+        "id": "Q056",
+        "category": "Vague_Semantic",
+        "prompt": "Here is a case involving a deflagration to detonation transition (DDT), if the computation blows up, please reduce deltaT.",
+        "ground_truth": [
+            "blastXiFoam_deflagrationToDetonationTransition.md"
+        ]
+    },
+    {
+        "id": "Q057",
+        "category": "Function_Scenario",
+        "prompt": "I need to simulate shock wave diffraction over a forward step, please provide the code directly based on the corresponding tutorial.",
+        "ground_truth": [
+            "blastParcelFoam_forwardStep.md"
+        ]
+    },
+    {
+        "id": "Q058",
+        "category": "Vague_Semantic",
+        "prompt": "For the example called a symmetric intersection of two explosive charges, no theoretical explanation needed, just give me a runnable script.",
+        "ground_truth": [
+            "blastFoam_twoChargeDetonation.md"
+        ]
+    },
+    {
+        "id": "Q059",
+        "category": "Vague_Semantic",
+        "prompt": "For the example called a triple point shock interaction, no theoretical explanation needed, just give me a runnable script.",
+        "ground_truth": [
+            "blastFoam_triplePointShockInteration.md"
+        ]
+    },
+    {
+        "id": "Q060",
+        "category": "Function_Scenario",
+        "prompt": "Regarding mapping a 1D field to a 3D building, establish a matching physical computational domain.",
+        "ground_truth": [
+            "blastFoam_mappedBuilding3D.md"
+        ]
+    },
+    {
+        "id": "Q061",
+        "category": "Physics_Parameter",
+        "prompt": "For the a flow field mixed with reacting particles case, configure reasonable endTime and writeInterval.",
+        "ground_truth": [
+            "blastEulerFoam_reactingParticles.md"
+        ]
+    },
+    {
+        "id": "Q062",
+        "category": "Physics_Parameter",
+        "prompt": "In the configuration file of a flow field around a moving boundary cone, specify the turbulence model or adjust the differencing scheme.",
+        "ground_truth": [
+            "blastFoam_movingCone.md"
+        ]
+    },
+    {
+        "id": "Q063",
+        "category": "Physics_Parameter",
+        "prompt": "For the a pure unobstructed free-field explosion case, configure reasonable endTime and writeInterval.",
+        "ground_truth": [
+            "blastFoam_freeField.md"
+        ]
+    },
+    {
+        "id": "Q064",
+        "category": "Physics_Parameter",
+        "prompt": "Before running a 3D building impacted by blast, if it's a structured mesh, teach me how to modify blockMeshDict.",
+        "ground_truth": [
+            "blastFoam_building3D.md"
+        ]
+    },
+    {
+        "id": "Q065",
+        "category": "Vague_Semantic",
+        "prompt": "Here is a case involving an explosion inside a closed, internal room, if the computation blows up, please reduce deltaT.",
+        "ground_truth": [
+            "blastFoam_internalDetonation_internalDetonation.md"
+        ]
+    },
+    {
+        "id": "Q066",
+        "category": "Physics_Parameter",
+        "prompt": "In the configuration file of multiple charges with delayed detonation times, specify the turbulence model or adjust the differencing scheme.",
+        "ground_truth": [
+            "blastFoam_delayedDetonation.md"
+        ]
+    },
+    {
+        "id": "Q067",
+        "category": "Function_Scenario",
+        "prompt": "Regarding an axisymmetric wedge explosion domain, establish a matching physical computational domain.",
+        "ground_truth": [
+            "blastFoam_axisymmetricCharge.md"
+        ]
+    },
+    {
+        "id": "Q068",
+        "category": "Vague_Semantic",
+        "prompt": "Here is a case involving a 1D shock tube, if the computation blows up, please reduce deltaT.",
+        "ground_truth": [
+            "blastEulerFoam_shockTube_polydisperse.md"
+        ]
+    },
+    {
+        "id": "Q069",
+        "category": "Vague_Semantic",
+        "prompt": "For the example called breakthrough leakage of a bursting window, no theoretical explanation needed, just give me a runnable script.",
+        "ground_truth": [
+            "blastFoam_burstingWindow_workshop.md"
+        ]
+    },
+    {
+        "id": "Q070",
+        "category": "Physics_Parameter",
+        "prompt": "For the fluid-structure interaction deforming a metal flap case, configure reasonable endTime and writeInterval.",
+        "ground_truth": [
+            "blastFSIFoam_flap.md"
+        ]
+    },
+    {
+        "id": "Q071",
+        "category": "Vague_Semantic",
+        "prompt": "Here is a case involving a deflagration to detonation transition (DDT), if the computation blows up, please reduce deltaT.",
+        "ground_truth": [
+            "blastXiFoam_deflagrationToDetonationTransition.md"
+        ]
+    },
+    {
+        "id": "Q072",
+        "category": "Function_Scenario",
+        "prompt": "Regarding shock wave diffraction over a forward step, establish a matching physical computational domain.",
+        "ground_truth": [
+            "blastParcelFoam_forwardStep.md"
+        ]
+    },
+    {
+        "id": "Q073",
+        "category": "Function_Scenario",
+        "prompt": "Regarding a symmetric intersection of two explosive charges, establish a matching physical computational domain.",
+        "ground_truth": [
+            "blastFoam_twoChargeDetonation.md"
+        ]
+    },
+    {
+        "id": "Q074",
+        "category": "Function_Scenario",
+        "prompt": "Regarding a triple point shock interaction, establish a matching physical computational domain.",
+        "ground_truth": [
+            "blastFoam_triplePointShockInteration.md"
+        ]
+    },
+    {
+        "id": "Q075",
+        "category": "Function_Scenario",
+        "prompt": "I need to simulate mapping a 1D field to a 3D building, please provide the code directly based on the corresponding tutorial.",
+        "ground_truth": [
+            "blastFoam_mappedBuilding3D.md"
+        ]
+    },
+    {
+        "id": "Q076",
+        "category": "Function_Scenario",
+        "prompt": "Regarding a flow field mixed with reacting particles, establish a matching physical computational domain.",
+        "ground_truth": [
+            "blastEulerFoam_reactingParticles.md"
+        ]
+    },
+    {
+        "id": "Q077",
+        "category": "Physics_Parameter",
+        "prompt": "In the configuration file of a flow field around a moving boundary cone, specify the turbulence model or adjust the differencing scheme.",
+        "ground_truth": [
+            "blastFoam_movingCone.md"
+        ]
+    },
+    {
+        "id": "Q078",
+        "category": "Physics_Parameter",
+        "prompt": "Before running a pure unobstructed free-field explosion, if it's a structured mesh, teach me how to modify blockMeshDict.",
+        "ground_truth": [
+            "blastFoam_freeField.md"
+        ]
+    },
+    {
+        "id": "Q079",
+        "category": "Function_Scenario",
+        "prompt": "Regarding a 3D building impacted by blast, establish a matching physical computational domain.",
+        "ground_truth": [
+            "blastFoam_building3D.md"
+        ]
+    },
+    {
+        "id": "Q080",
+        "category": "Function_Scenario",
+        "prompt": "Regarding an explosion inside a closed, internal room, establish a matching physical computational domain.",
+        "ground_truth": [
+            "blastFoam_internalDetonation_internalDetonation.md"
+        ]
+    },
+    {
+        "id": "Q081",
+        "category": "Vague_Semantic",
+        "prompt": "For the example called multiple charges with delayed detonation times, no theoretical explanation needed, just give me a runnable script.",
+        "ground_truth": [
+            "blastFoam_delayedDetonation.md"
+        ]
+    },
+    {
+        "id": "Q082",
+        "category": "Function_Scenario",
+        "prompt": "I need to simulate an axisymmetric wedge explosion domain, please provide the code directly based on the corresponding tutorial.",
+        "ground_truth": [
+            "blastFoam_axisymmetricCharge.md"
+        ]
+    },
+    {
+        "id": "Q083",
+        "category": "Physics_Parameter",
+        "prompt": "In the configuration file of a 1D shock tube, specify the turbulence model or adjust the differencing scheme.",
+        "ground_truth": [
+            "blastEulerFoam_shockTube_polydisperse.md"
+        ]
+    },
+    {
+        "id": "Q084",
+        "category": "Vague_Semantic",
+        "prompt": "For the example called breakthrough leakage of a bursting window, no theoretical explanation needed, just give me a runnable script.",
+        "ground_truth": [
+            "blastFoam_burstingWindow_workshop.md"
+        ]
+    },
+    {
+        "id": "Q085",
+        "category": "Physics_Parameter",
+        "prompt": "Before running fluid-structure interaction deforming a metal flap, if it's a structured mesh, teach me how to modify blockMeshDict.",
+        "ground_truth": [
+            "blastFSIFoam_flap.md"
+        ]
+    },
+    {
+        "id": "Q086",
+        "category": "Physics_Parameter",
+        "prompt": "Before running a deflagration to detonation transition (DDT), if it's a structured mesh, teach me how to modify blockMeshDict.",
+        "ground_truth": [
+            "blastXiFoam_deflagrationToDetonationTransition.md"
+        ]
+    },
+    {
+        "id": "Q087",
+        "category": "Function_Scenario",
+        "prompt": "Regarding shock wave diffraction over a forward step, establish a matching physical computational domain.",
+        "ground_truth": [
+            "blastParcelFoam_forwardStep.md"
+        ]
+    },
+    {
+        "id": "Q088",
+        "category": "Physics_Parameter",
+        "prompt": "For the a symmetric intersection of two explosive charges case, configure reasonable endTime and writeInterval.",
+        "ground_truth": [
+            "blastFoam_twoChargeDetonation.md"
+        ]
+    },
+    {
+        "id": "Q089",
+        "category": "Vague_Semantic",
+        "prompt": "Here is a case involving a triple point shock interaction, if the computation blows up, please reduce deltaT.",
+        "ground_truth": [
+            "blastFoam_triplePointShockInteration.md"
+        ]
+    },
+    {
+        "id": "Q090",
+        "category": "Physics_Parameter",
+        "prompt": "Before running mapping a 1D field to a 3D building, if it's a structured mesh, teach me how to modify blockMeshDict.",
+        "ground_truth": [
+            "blastFoam_mappedBuilding3D.md"
+        ]
+    },
+    {
+        "id": "Q091",
+        "category": "Function_Scenario",
+        "prompt": "I need to simulate a flow field mixed with reacting particles, please provide the code directly based on the corresponding tutorial.",
+        "ground_truth": [
+            "blastEulerFoam_reactingParticles.md"
+        ]
+    },
+    {
+        "id": "Q092",
+        "category": "Physics_Parameter",
+        "prompt": "Before running a flow field around a moving boundary cone, if it's a structured mesh, teach me how to modify blockMeshDict.",
+        "ground_truth": [
+            "blastFoam_movingCone.md"
+        ]
+    },
+    {
+        "id": "Q093",
+        "category": "Function_Scenario",
+        "prompt": "I need to simulate a pure unobstructed free-field explosion, please provide the code directly based on the corresponding tutorial.",
+        "ground_truth": [
+            "blastFoam_freeField.md"
+        ]
+    },
+    {
+        "id": "Q094",
+        "category": "Physics_Parameter",
+        "prompt": "In the configuration file of a 3D building impacted by blast, specify the turbulence model or adjust the differencing scheme.",
+        "ground_truth": [
+            "blastFoam_building3D.md"
+        ]
+    },
+    {
+        "id": "Q095",
+        "category": "Function_Scenario",
+        "prompt": "Regarding an explosion inside a closed, internal room, establish a matching physical computational domain.",
+        "ground_truth": [
+            "blastFoam_internalDetonation_internalDetonation.md"
+        ]
+    },
+    {
+        "id": "Q096",
+        "category": "Function_Scenario",
+        "prompt": "I need to simulate multiple charges with delayed detonation times, please provide the code directly based on the corresponding tutorial.",
+        "ground_truth": [
+            "blastFoam_delayedDetonation.md"
+        ]
+    },
+    {
+        "id": "Q097",
+        "category": "Vague_Semantic",
+        "prompt": "For the example called an axisymmetric wedge explosion domain, no theoretical explanation needed, just give me a runnable script.",
+        "ground_truth": [
+            "blastFoam_axisymmetricCharge.md"
+        ]
+    },
+    {
+        "id": "Q098",
+        "category": "Vague_Semantic",
+        "prompt": "Here is a case involving a 1D shock tube, if the computation blows up, please reduce deltaT.",
+        "ground_truth": [
+            "blastEulerFoam_shockTube_polydisperse.md"
+        ]
+    },
+    {
+        "id": "Q099",
+        "category": "Physics_Parameter",
+        "prompt": "Before running breakthrough leakage of a bursting window, if it's a structured mesh, teach me how to modify blockMeshDict.",
+        "ground_truth": [
+            "blastFoam_burstingWindow_workshop.md"
+        ]
+    },
+    {
+        "id": "Q100",
+        "category": "Function_Scenario",
+        "prompt": "Regarding fluid-structure interaction deforming a metal flap, establish a matching physical computational domain.",
+        "ground_truth": [
+            "blastFSIFoam_flap.md"
+        ]
+    }
+]

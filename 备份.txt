@@ -1,8 +1,10 @@
 建立一个3D建筑物爆炸模拟，参考 blastFoam_building3D 案例,输出到一个新的文件夹
 建立一个3D建筑物爆炸模拟，参考 blastFoam_building3D 案例,输出到building3D_1文件夹，自己帮我合理的配置测点坐标.
-运行当前 building3D_3 案例，如果有报错请自己查看报错并反复修正。
+运行当前 building4 案例，如果有报错请自己查看报错并反复修正。
 
-缺少了 Allrun 文件
+对于Agent系统，下面的叙述正确符合吗，有没有什么需要改动的地方
+
+就按照测试PRD文档给我一步一步实施吧，先建立一个预设的Prompt JSON，大概
 
 实验git [Environment]::SetEnvironmentVariable("CLAUDE_CODE_GIT_BASH_PATH", "E:\git-bash\Git\bin\bash.exe", "User")
 

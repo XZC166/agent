@@ -10,6 +10,7 @@ import numpy as np
 from pathlib import Path
 from typing import List, Dict, Any, Optional, Tuple
 import json
+from rank_bm25 import BM25Okapi
 
 # Ensure the root directory is in the Python path
 root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -327,7 +328,7 @@ class OpenFOAMEmbedder:
 
     def similarity_search(self, query: str, k: int = None) -> List[Document]:
         """
-        Perform similarity search on the vector store
+        Perform hybrid similarity search (Dense + BM25 Sparse RRF) on the vector store
 
         Args:
             query: Search query string
@@ -345,28 +346,48 @@ class OpenFOAMEmbedder:
             return []
 
         k = k or config.TOP_K_RESULTS
-
-        # Get query embedding
+        
+        # 1. Dense Retrieval (Cosine Similarity)
         query_embedding = self._get_embedding(query)
-
-        # Calculate similarities
         similarities = []
         for i, doc_embedding in enumerate(self.embeddings_cache):
             similarity = self._cosine_similarity(query_embedding, doc_embedding)
             similarities.append((i, similarity))
-
-        # Sort by similarity and get top k
+        
         similarities.sort(key=lambda x: x[1], reverse=True)
-        top_k = similarities[:k]
-
-        # Get corresponding documents
+        dense_rank = {idx: rank for rank, (idx, _) in enumerate(similarities)}
+        
+        # 2. Sparse Retrieval (BM25)
+        tokenized_corpus = [doc.page_content.lower().split() for doc in self.documents]
+        bm25 = BM25Okapi(tokenized_corpus)
+        tokenized_query = query.lower().split()
+        bm25_scores = bm25.get_scores(tokenized_query)
+        
+        bm25_indices = list(range(len(self.documents)))
+        bm25_indices.sort(key=lambda i: bm25_scores[i], reverse=True)
+        sparse_rank = {idx: rank for rank, idx in enumerate(bm25_indices)}
+        
+        # 3. Reciprocal Rank Fusion (RRF)
+        rrf_k = 60
+        rrf_scores = []
+        for i in range(len(self.documents)):
+            score = 0.0
+            if i in dense_rank:
+                score += 1.0 / (rrf_k + dense_rank[i])
+            if i in sparse_rank:
+                score += 1.0 / (rrf_k + sparse_rank[i])
+            rrf_scores.append((i, score))
+            
+        rrf_scores.sort(key=lambda x: x[1], reverse=True)
+        top_k = rrf_scores[:k]
+        
         results = [self.documents[i] for i, _ in top_k]
 
         if config.ENABLE_VERBOSE_LOGGING:
-            print(f"Found {len(results)} relevant documents for query: '{query[:50]}...'")
-            for i, (idx, sim) in enumerate(top_k[:3]):
-                print(f"  {i+1}. Similarity: {sim:.3f} - {self.documents[idx].metadata.get('source', 'Unknown')}")
-
+            print(f"Found {len(results)} relevant documents via Hybrid Search for query: '{query[:50]}...'")
+            for i, (idx, score) in enumerate(top_k[:3]):
+                print(f"  {i+1}. RRF Score: {score:.5f} - {self.documents[idx].metadata.get('source', 'Unknown')}")
+                
         return results
 
     def format_rag_context(self, documents: List[Document]) -> str:
