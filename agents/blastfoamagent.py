@@ -181,10 +181,19 @@ CRITICAL RULES FOR BLASTFOAM CASE GENERATION:
   2. Analyze the truncated output. If it says FAILED or `Floating point exception` or `FOAM FATAL ERROR` occurs, DO NOT STOP!
   3. You MUST identify the error cause (read the `log.blastFoam` or command output using `read_log_file` if needed), think about the issue (e.g., missing specific field, syntax error, bounds error), and USE `write_file` tool to rewrite the flawed dictionary!
   4. THEN, run the verification command again to see if it succeeds.
-  5. You are allowed to retry executing and fixing the case up to 3 times in a single conversation turn. If it succeeds, announce the successful run!
+  5. You are allowed to retry executing and fixing the case up to 3 times in a single conversation turn. Note: Running `./Allclean` only cleans the folder. You MUST run `./Allrun` afterward to actually run the simulation. Only announce success when `./Allrun` (and `blastFoam`) succeeds!
 
 
 
+
+
+
+- **CRITICAL BOUNDARY CONDITION RULE**:
+  For open/outlet boundaries in `0/p`, ALWAYS use `pressureWaveTransmissive` instead of `waveTransmissive`. The `waveTransmissive` condition requires a `psi` field which blastFoam does not provide, causing a FOAM FATAL ERROR.
+  If you use `pressureWaveTransmissive`, remember to include its required parameters (e.g., `gamma 1.4; lInf 1; fieldInf 100000;`).
+
+- **CRITICAL ALLRUN RULE**: The `Allrun` script MUST execute the mesh, fields, and solver (e.g. `runApplication blastFoam`) so the case actually calculates!
+- **CRITICAL ALLRUN RULE**: The `Allrun` script MUST execute the mesh, fields, and solver (e.g. `runApplication blastFoam`) so the case actually calculates!
 - **CRITICAL ALLCLEAN RULE**: When creating the `Allclean` script, it MUST explicitly contain:
   ```bash
   #!/bin/sh
@@ -198,7 +207,7 @@ CRITICAL RULES FOR BLASTFOAM CASE GENERATION:
 
 
 - **CRITICAL TOKEN CONSERVATION (ANTI-TRUNCATION) RULE**: Generating many OpenFOAM dictionary files often exceeds AI token limits, causing incomplete files and run crashes! To severely reduce token usage:
-  1. DO NOT output the huge OpenFOAM `/*----------*/` banner header in ANY file! Start EVERY file immediately with `FoamFile {{ ... }}` or just the fields if applicable.
+  1. TO AVOID FATAL IO ERRORS, EVERY dictionary file MUST start immediately and exactly with the word \"FoamFile\" on the absolute first line. DO NOT output any OpenFOAM /*---*/ banners or blank lines before FoamFile.
   2. YOU MUST GENERATE `0/e` with `dimensions [0 2 -2 0 0 0 0];` and `internalField uniform 2.5e5;`. You MUST also configure `e` in `system/setFieldsDict` (default 2.5e5, and 9.0e6 in the explosive region). Otherwise blastFoam will crash with a thermodynamic FPE!
   
 

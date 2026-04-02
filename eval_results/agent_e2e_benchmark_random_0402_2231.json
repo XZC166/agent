@@ -1,0 +1,30 @@
+{
+    "summary": {
+        "total_tested": 3,
+        "final_runnable_rate": "66.67%",
+        "avg_latency_sec": 438.08
+    },
+    "details": [
+        {
+            "id": "Q095",
+            "latency_sec": 501.76,
+            "format_compliance": true,
+            "final_runnable": false,
+            "sandbox_dir": "/tmp/agent_eval_Q095_1775138952"
+        },
+        {
+            "id": "Q006",
+            "latency_sec": 558.84,
+            "format_compliance": true,
+            "final_runnable": true,
+            "sandbox_dir": "/tmp/agent_eval_Q006_1775139454"
+        },
+        {
+            "id": "Q011",
+            "latency_sec": 253.64,
+            "format_compliance": true,
+            "final_runnable": true,
+            "sandbox_dir": "/tmp/agent_eval_Q011_1775140013"
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "summary": {
+        "total_tested": 1,
+        "format_compliance_rate": "100.00%",
+        "final_runnable_rate": "100.00%"
+    },
+    "details": [
+        {
+            "id": "Q001",
+            "latency_sec": 223.33,
+            "format_compliance": true,
+            "final_runnable": true,
+            "sandbox_dir": "/tmp/agent_eval_Q001_1775117388"
+        }
+    ]
+}

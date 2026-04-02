@@ -1,0 +1,13 @@
+{
+    "summary": {},
+    "details": [
+        {
+            "id": "Q001",
+            "latency_sec": 225.56,
+            "format_compliance": true,
+            "first_pass_runnable": false,
+            "final_runnable": true,
+            "sandbox_dir": "/tmp/agent_eval_Q001_1775133332"
+        }
+    ]
+}

@@ -1,0 +1,35 @@
+{
+    "summary": {
+        "total_tested": 3,
+        "format_compliance_rate": "100.00%",
+        "first_pass_runnable_rate": "0.00%",
+        "final_runnable_rate": "66.67%",
+        "avg_latency_sec": 330.34
+    },
+    "details": [
+        {
+            "id": "Q001",
+            "latency_sec": 509.6,
+            "format_compliance": true,
+            "first_pass_runnable": false,
+            "final_runnable": true,
+            "sandbox_dir": "/tmp/agent_eval_Q001_1775126439"
+        },
+        {
+            "id": "Q002",
+            "latency_sec": 289.89,
+            "format_compliance": true,
+            "first_pass_runnable": false,
+            "final_runnable": false,
+            "sandbox_dir": "/tmp/agent_eval_Q002_1775126949"
+        },
+        {
+            "id": "Q003",
+            "latency_sec": 191.53,
+            "format_compliance": true,
+            "first_pass_runnable": false,
+            "final_runnable": true,
+            "sandbox_dir": "/tmp/agent_eval_Q003_1775127239"
+        }
+    ]
+}
