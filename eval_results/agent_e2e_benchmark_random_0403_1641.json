@@ -1,0 +1,90 @@
+{
+    "summary": {
+        "total_tested": 10,
+        "first_pass_runnable_rate": "20.00%",
+        "final_runnable_rate": "70.00%",
+        "avg_latency_sec": 440.45
+    },
+    "details": [
+        {
+            "id": "Q008",
+            "latency_sec": 258.33,
+            "format_compliance": true,
+            "first_pass_runnable": false,
+            "final_runnable": true,
+            "sandbox_dir": "/tmp/agent_eval_Q008_1775201267"
+        },
+        {
+            "id": "Q003",
+            "latency_sec": 208.67,
+            "format_compliance": true,
+            "first_pass_runnable": false,
+            "final_runnable": true,
+            "sandbox_dir": "/tmp/agent_eval_Q003_1775201526"
+        },
+        {
+            "id": "Q070",
+            "latency_sec": 249.06,
+            "format_compliance": false,
+            "first_pass_runnable": false,
+            "final_runnable": true,
+            "sandbox_dir": "/tmp/agent_eval_Q070_1775201735"
+        },
+        {
+            "id": "Q031",
+            "latency_sec": 256.06,
+            "format_compliance": true,
+            "first_pass_runnable": true,
+            "final_runnable": true,
+            "sandbox_dir": "/tmp/agent_eval_Q031_1775201985"
+        },
+        {
+            "id": "Q034",
+            "latency_sec": 962.98,
+            "format_compliance": false,
+            "first_pass_runnable": false,
+            "final_runnable": false,
+            "sandbox_dir": "/tmp/agent_eval_Q034_1775202241"
+        },
+        {
+            "id": "Q011",
+            "latency_sec": 468.87,
+            "format_compliance": true,
+            "first_pass_runnable": false,
+            "final_runnable": true,
+            "sandbox_dir": "/tmp/agent_eval_Q011_1775203204"
+        },
+        {
+            "id": "Q025",
+            "latency_sec": 522.28,
+            "format_compliance": true,
+            "first_pass_runnable": false,
+            "final_runnable": false,
+            "sandbox_dir": "/tmp/agent_eval_Q025_1775203674"
+        },
+        {
+            "id": "Q099",
+            "latency_sec": 1008.08,
+            "format_compliance": true,
+            "first_pass_runnable": false,
+            "final_runnable": true,
+            "sandbox_dir": "/tmp/agent_eval_Q099_1775204196"
+        },
+        {
+            "id": "Q068",
+            "latency_sec": 248.08,
+            "format_compliance": true,
+            "first_pass_runnable": true,
+            "final_runnable": true,
+            "sandbox_dir": "/tmp/agent_eval_Q068_1775205205"
+        },
+        {
+            "id": "Q022",
+            "latency_sec": 222.13,
+            "format_compliance": true,
+            "first_pass_runnable": false,
+            "final_runnable": false,
+            "sandbox_dir": "/tmp/agent_eval_Q022_1775205454"
+        }
+    ]
+}

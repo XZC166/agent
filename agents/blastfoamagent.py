@@ -164,7 +164,9 @@ class BlastFoamAgent:
             model=config.LLM_MODEL,
             api_key=config.LLM_API_KEY,
             base_url=config.LLM_BASE_URL,
-            temperature=0
+            temperature=0,
+            request_timeout=60,
+            max_retries=3
         )
         
         self.tools = [create_directory, write_file, execute_command, read_log_file]
@@ -179,7 +181,7 @@ CRITICAL RULES FOR BLASTFOAM CASE GENERATION:
   If the user asks you to "run" or "verify" the case:
   1. Use the `execute_command` tool to run the simulation (e.g., `./Allrun` or specific OpenFOAM commands).
   2. Analyze the truncated output. If it says FAILED or `Floating point exception` or `FOAM FATAL ERROR` occurs, DO NOT STOP!
-  3. You MUST identify the error cause (read the `log.blastFoam` or command output using `read_log_file` if needed), think about the issue (e.g., missing specific field, syntax error, bounds error), and USE `write_file` tool to rewrite the flawed dictionary!
+  3. You MUST identify the error cause (read the solver log (e.g. `log.blastFoam`, `log.blastFSIFoam`, `log.blastEulerFoam`) or command output using `read_log_file` if needed), think about the issue (e.g., missing specific field, syntax error, bounds error), and USE `write_file` tool to rewrite the flawed dictionary!
   4. THEN, run the verification command again to see if it succeeds.
   5. You are allowed to retry executing and fixing the case up to 3 times in a single conversation turn. Note: Running `./Allclean` only cleans the folder. You MUST run `./Allrun` afterward to actually run the simulation. Only announce success when `./Allrun` (and `blastFoam`) succeeds!
 
@@ -192,7 +194,15 @@ CRITICAL RULES FOR BLASTFOAM CASE GENERATION:
   For open/outlet boundaries in `0/p`, ALWAYS use `pressureWaveTransmissive` instead of `waveTransmissive`. The `waveTransmissive` condition requires a `psi` field which blastFoam does not provide, causing a FOAM FATAL ERROR.
   If you use `pressureWaveTransmissive`, remember to include its required parameters (e.g., `gamma 1.4; lInf 1; fieldInf 100000;`).
 
-- **CRITICAL ALLRUN RULE**: The `Allrun` script MUST execute the mesh, fields, and solver (e.g. `runApplication blastFoam`) so the case actually calculates!
+- **CRITICAL TIME STEP RULE (controlDict)**: `blastFoam` requires tight time steps. In `system/controlDict`, YOU MUST SET:
+  `adjustTimeStep yes;`
+  `maxCo 0.5;`
+  `maxDeltaT 1e-4;`
+
+- **CRITICAL FVSCHEMES (ddtSchemes) RULE**: In `system/fvSchemes`, under the `ddtSchemes` block, you MUST define a `timeIntegrator` (e.g., `timeIntegrator RK2SSP;`). Omission causes FATAL IO ERROR!
+
+- **CRITICAL OPENFOAM DICTIONARY HERADERS**: EVERY dictionary file MUST EXACTLY START with the FoamFile block! (e.g. `FoamFile {{ format ascii; class dictionary; location "system"; object controlDict; }}`). Never omit this!
+
 - **CRITICAL ALLRUN RULE**: The `Allrun` script MUST execute the mesh, fields, and solver (e.g. `runApplication blastFoam`) so the case actually calculates!
 - **CRITICAL ALLCLEAN RULE**: When creating the `Allclean` script, it MUST explicitly contain:
   ```bash

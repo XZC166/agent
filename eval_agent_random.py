@@ -17,7 +17,6 @@ class StreamTee(object):
         self.stream2 = stream2
     def write(self, obj):
         self.stream1.write(obj)
-        self.stream1.flush()
         self.stream2.write(obj)
     def flush(self):
         self.stream1.flush()
@@ -107,6 +106,7 @@ def evaluate_e2e_agent_random(num_samples=3):
             "id": q_id,
             "latency_sec": round(latency, 2),
             "format_compliance": format_compliance,
+            "first_pass_runnable": first_pass_runnable,
             "final_runnable": final_runnable,
             "sandbox_dir": sandbox_dir
         })
@@ -137,5 +137,5 @@ if __name__ == "__main__":
     #
     # 注意：每个案例完整的推理和解算最多可能需要 3~5 分钟。
     # =========================================================
-    evaluate_e2e_agent_random(num_samples=3)
+    evaluate_e2e_agent_random(num_samples=10)
     os._exit(0)
